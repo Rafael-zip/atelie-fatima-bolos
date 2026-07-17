@@ -1,0 +1,43 @@
+/* =====================
+   RESET E BASE
+   ===================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background-color: #1a0a05;
+    color: #ffdbce;
+}
+
+/* Importa as fontes do Google */
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap');
+
+/* =====================
+   TÍTULOS DAS SEÇÕES
+   ===================== */
+.secao-titulo {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2rem;
+    color: #EDD5A8;
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+.secao-subtitulo {
+    font-size: 0.9rem;
+    color: #C49060;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+/* =====================
+   LINKS
+   ===================== */
+a{
+    text-decoration: none;
+    color: inherit;
+}

@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel — Ateliê Fátima Bolos</title>
+
+  <!--Fontes-->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico"/>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap"
+    rel="stylesheet">
+
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #1a0a05;
+      color: #ffdbce;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* =====================
+       LOGIN
+       ===================== */
+    .login-caixa {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .login-logo {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2.5rem;
+      color: #EDD5A8;
+      margin-bottom: 0.5rem;
+    }
+
+    .login-subtitulo {
+      font-size: 0.9rem;
+      color: #C49060;
+      margin-bottom: 2rem;
+    }
+
+    .login-campo {
+      width: 100%;
+      max-width: 320px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin-bottom: 1rem;
+    }
+
+    .login-campo label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #C49060;
+    }
+
+    .login-campo input {
+      background-color: #2C1008;
+      border: 1.5px solid #3d1a0e;
+      border-radius: 10px;
+      padding: 0.8rem 1rem;
+      color: #EDD5A8;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border 0.2s;
+      width: 100%;
+    }
+
+    .login-campo input:focus {
+      border-color: #EDD5A8;
+    }
+
+    #btn-login {
+      width: 100%;
+      max-width: 320px;
+      background-color: #2C1008;
+      color: #EDD5A8;
+      border: 2px solid #EDD5A8;
+      border-radius: 50px;
+      padding: 0.8rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    #btn-login:hover {
+      background-color: #EDD5A8;
+      color: #2C1008;
+    }
+
+    .login-erro {
+      color: #B8405F;
+      font-size: 0.85rem;
+      margin-top: 0.8rem;
+      display: none;
+    }
+
+    /* =====================
+       HEADER DO PAINEL
+       ===================== */
+    .painel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1.5rem;
+      background-color: #2C1008;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .painel-logo {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.4rem;
+      color: #EDD5A8;
+    }
+
+    #btn-sair {
+      background: none;
+      border: 1.5px solid #EDD5A8;
+      border-radius: 50px;
+      padding: 0.4rem 1rem;
+      color: #EDD5A8;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    #btn-sair:hover {
+      background-color: #EDD5A8;
+      color: #2C1008;
+    }
+
+    /* =====================
+       CONTEÚDO DO PAINEL
+       ===================== */
+    .painel-conteudo {
+      padding: 2rem 1.5rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .painel-titulo {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2rem;
+      color: #EDD5A8;
+      margin-bottom: 2rem;
+    }
+
+    .painel-subtitulo {
+      font-size: 0.9rem;
+      color: #C49060;
+      margin-bottom: 2rem;
+    }
+
+    .carregando {
+      text-align: center;
+      color: #C49060;
+      padding: 2rem;
+    }
+
+    /* =====================
+       CARDS DE PEDIDO
+       ===================== */
+    .pedido-card {
+      background-color: #2C1008;
+      border: 1.5px solid #3d1a0e;
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .pedido-card-topo {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+    }
+
+    .pedido-nome {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #EDD5A8;
+    }
+
+    .pedido-whatsapp {
+      font-size: 0.85rem;
+      color: #C49060;
+      margin-top: 0.2rem;
+    }
+
+    .pedido-status {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.3rem 0.8rem;
+      border-radius: 50px;
+    }
+
+    .status-novo {
+      background-color: #fce4ec;
+      color: #880e4f;
+    }
+
+    .status-confirmado {
+      background-color: #c8e6c9;
+      color: #1b5e20;
+    }
+
+    .status-concluido {
+      background-color: #eeeeee;
+      color: #424242;
+    }
+
+    .pedido-detalhes {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.8rem;
+      margin-bottom: 1rem;
+    }
+
+    .pedido-detalhe {
+      background-color: #1a0a05;
+      border-radius: 10px;
+      padding: 0.6rem 0.8rem;
+    }
+
+    .pedido-detalhe-label {
+      font-size: 0.7rem;
+      color: #C49060;
+      text-transform: uppercase;
+      letter-spacing: 0.05rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .pedido-detalhe-valor {
+      font-size: 0.9rem;
+      color: #EDD5A8;
+      font-weight: 500;
+    }
+
+    .pedido-mensagem {
+      background-color: #1a0a05;
+      border-radius: 10px;
+      padding: 0.8rem;
+      font-size: 0.85rem;
+      color: #C49060;
+      font-style: italic;
+      margin-bottom: 1rem;
+    }
+
+    .pedido-acoes {
+      display: flex;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-confirmar {
+      flex: 1;
+      padding: 0.7rem;
+      background-color: #1a0a05;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    .btn-confirmar:hover {
+      opacity: 0.85;
+    }
+
+    .btn-concluir {
+      flex: 1;
+      padding: 0.7rem;
+      background-color: #2C1008;
+      color: #EDD5A8;
+      border: 1.5px solid #EDD5A8;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-concluir:hover {
+      background-color: #EDD5A8;
+      color: #2C1008;
+    }
+
+    .btn-arquivar {
+      background: none;
+      border: 1.5px solid #7a4a35;
+      border-radius: 10px;
+      padding: 0.6rem 1rem;
+      color: #7a4a35;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-arquivar:hover {
+      border-color: #B8405F;
+      color: #B8405F;
+
+    }
+  </style>
+</head>
+
+<body>
+
+  <!--TELA DE LOGIN -->
+  <div id="tela-login">
+
+    <div class="login-caixa">
+      <h1 class="login-logo">Ateliê Fátima</h1>
+      <p class="login-subtitulo">Painel Administrativo</p>
+
+      <div id="google-btn-container"></div>
+      <p id="login-erro" class="login-erro">Acesso não autorizado para essa conta.</p>
+    </div>
+
+  </div>
+
+  <!-- PAINEL PRINCIPAL (começa escondida) -->
+  <div id="painel" style="display:none">
+
+    <!--HEADER-->
+    <header class="painel-header">
+      <h1 class="painel-logo">Ateliê Fátima</h1>
+      <button id="btn-sair">Sair</button>
+    </header>
+
+    <!--CONTEÚDO -->
+    <main class="painel-conteudo">
+      <h2 class="painel-titulo">Pedidos recebidos</h2>
+      <p class="painel-subtitulo">Gerencie as encomendas da confeitaria</p>
+
+      <!--LISTA DE PEDIDOS -->
+      <div id="lista-pedidos">
+        <p class="carregando">Carregando pedidos...</p>
+      </div>
+    </main>
+
+  </div>
+
+  <script>
+
+    // =====================
+    // CONFIGURAÇÕES
+    // =====================
+    const URL_PLANILHA = 'https://script.google.com/macros/s/AKfycbydy8rZFfhOJvWK3WBv8YDpAUr9hgkz_0uEy-d6M4p9zXqY5nViLQRX6cF8EUUMvl_4XQ/exec';
+    const GOOGLE_CLIENT_ID ='SEU_CLIENT_ID_AQUI.apps.gooogleusercontent.com';
+
+
+    // =====================
+    // LOGIN COM GOOGLE
+    // =====================
+    window.onload = function () {
+      google.accounts.id.initialize({
+    client_id: '814272667016-c84m7qhs6dqjshkh17b590chnsorso6a.apps.googleusercontent.com',
+    callback: aoLogar
+});
+        
+      google.accounts.id.renderButton(
+        document.getElementById('google-btn-container'),
+        { theme: 'outline', size: 'large', text: 'signin_with' }
+      );
+    };
+
+    async function aoLogar(resposta) {
+      const erro = document.getElementById('login-erro');
+      erro.style.display = 'none';
+
+      // envia o token pro Apps Script verificar se o e-mail é autorizado
+     const verificacao = await fetch(URL_PLANILHA, {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify({ acao: 'verificarLogin', token: resposta.credential })
+});
+
+      const resultado = await verificacao.json();
+
+     if (resultado.autorizado) {
+        document.getElementById('tela-login').style.display = 'none';
+        document.getElementById('painel').style.display = 'block';
+        carregarPedidos();
+      } else {
+        erro.style.display = 'block';
+    }
+  }
+    // botão sair
+    document.getElementById('btn-sair').addEventListener('click', function () {
+      document.getElementById('painel').style.display = 'none';
+      document.getElementById('tela-login').style.display = 'block';
+      document.getElementById('login-erro').style.display = 'none';
+      google.accounts.id.disableAutoSelect();
+    });
+
+    // =====================
+    // CARREGAR PEDIDOS
+    // =====================
+    async function carregarPedidos() {
+      const lista = document.getElementById('lista-pedidos');
+      lista.innerHTML = '<p class="carregando">Carregando pedidos...</p>';
+
+      try {
+        const resposta = await fetch(URL_PLANILHA + '?acao=listar', {
+          method: 'GET',
+          redirect: 'follow'
+        });
+
+        const texto = await resposta.text();
+        const dados = JSON.parse(texto);
+
+        if (!dados.pedidos || dados.pedidos.length === 0) {
+          lista.innerHTML = '<p class="carregando">Nenhum pedido encontrado.</p>';
+          return;
+        }
+
+        lista.innerHTML = '';
+        dados.pedidos.reverse().forEach(function (pedido) {
+          lista.innerHTML += criarCardPedido(pedido);
+        });
+
+      } catch (erro) {
+        console.log('Erro:', erro);
+        lista.innerHTML = '<p class="carregando">Erro ao carregar pedidos. Tente novamente.</p>';
+      }
+    }
+
+    // =====================
+    // CRIAR CARD DO PEDIDO
+    // =====================
+    function criarCardPedido(p) {
+
+      // formata as datas
+      const dataEvento = p.dataEvento ? String(p.dataEvento).split('T')[0].split('-').reverse().join('/') : 'Não informado';
+      const dataRecebido = p.data ? String(p.data).substring(0, 16).replace('T', ' ').split('-').join('/').replace(/(\d{4})\/(\d{2})\/(\d{2})/, '$3/$2/$1') : '';
+
+      const statusClasse = p.status === 'Novo' ? 'status-novo' :
+        p.status === 'Confirmado' ? 'status-confirmado' : 'status-concluido';
+
+      const botoes = p.status === 'Novo'
+        ? `<button class="btn-confirmar" onclick="atualizarStatus(${p.linha}, 'Confirmado')">✓ Confirmar</button>
+       <button class="btn-concluir" onclick="atualizarStatus(${p.linha}, 'Concluído')">✔ Concluído</button>`
+        : p.status === 'Confirmado'
+          ? `<button class="btn-concluir" onclick="atualizarStatus(${p.linha}, 'Concluído')">✔ Marcar Concluído</button>`
+         : `<button class="btn-arquivar" onclick="arquivarPedido(this, ${p.linha})">✕ Remover da lista</button>`;
+
+      return `
+    <div class="pedido-card">
+      <div class="pedido-card-topo">
+        <div>
+          <p class="pedido-nome">${p.nome}</p>
+          <p class="pedido-whatsapp">💬 ${p.whatsapp}</p>
+        </div>
+        <span class="pedido-status ${statusClasse}">${p.status}</span>
+      </div>
+
+      <div class="pedido-detalhes">
+        <div class="pedido-detalhe">
+          <p class="pedido-detalhe-label">Data do Evento</p>
+          <p class="pedido-detalhe-valor">📅 ${dataEvento}</p>
+        </div>
+        <div class="pedido-detalhe">
+          <p class="pedido-detalhe-label">Porções</p>
+          <p class="pedido-detalhe-valor">🎂 ${p.porcoes} fatias</p>
+        </div>
+        <div class="pedido-detalhe">
+          <p class="pedido-detalhe-label">Massa</p>
+          <p class="pedido-detalhe-valor">${p.massa}</p>
+        </div>
+        <div class="pedido-detalhe">
+          <p class="pedido-detalhe-label">Recheio 1ª Camada</p>
+          <p class="pedido-detalhe-valor">${p.recheio1}</p>
+        </div>
+        <div class="pedido-detalhe">
+          <p class="pedido-detalhe-label">Recheio 2ª Camada</p>
+          <p class="pedido-detalhe-valor">${p.recheio2}</p>
+        </div>
+        <div class="pedido-detalhe">
+          <p class="pedido-detalhe-label">Recebido em</p>
+          <p class="pedido-detalhe-valor">${dataRecebido}</p>
+        </div>
+      </div>
+
+      ${p.mensagem ? `<div class="pedido-mensagem">"${p.mensagem}"</div>` : ''}
+
+      <div class="pedido-acoes">
+        ${botoes}
+      </div>
+    </div>
+  `;
+    }
+
+    // =====================
+    // ATUALIZAR STATUS
+    // =====================
+    async function atualizarStatus(linha, novoStatus) {
+      try {
+        await fetch(URL_PLANILHA, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ acao: 'atualizarStatus', linha, status: novoStatus })
+        });
+
+        setTimeout(carregarPedidos, 1000);
+      } catch (erro) {
+        alert('Erro ao atualizar. Tente novamente.');
+      }
+    }
+
+    function arquivarPedido(btn, linha) {
+      if (!confirm('Remove este pedido da planilha tambem?')) return;
+
+        const card = btn.closest('.pedido-card');
+        card.style.transition = 'opacity 0.4s';
+        card.style.opacity = '0';
+
+        //remove da planilha
+        fetch(URL_PLANILHA, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: {'Content-type': 'application/json' },
+          body: JSON.stringify({ acao: 'deletarLinha', linha: linha })
+        });
+
+
+        setTimeout(() => card.remove(), 400);
+      }
+
+      
+  </script>
+</body>
+
+</html>

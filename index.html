@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ateliê Fátima Bolos</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/home.css">
+
+
+    <!-- Fontes do Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap"
+        rel="stylesheet" />
+
+    <!-- Fontes dos Icones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <!-- Icones Material Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+
+    <link rel="icon" type="image/x-icon" href="/favicon.ico"/>
+
+    <!-- Open Graph / Compartilhamento (WhatsApp, Instagram, Facebook) -->
+    <meta property="og:title" content="Ateliê Fátima Bolos" />
+    <meta property="og:description" content="Bolos artesanais feitos com amor. encomende o seu" />
+    <meta property="og:image" content="https://atelie-da-fatima.netlify.app/img/og-image.jpg" />
+    <meta property="og:url" content="https://atelie-da-fatima.netlify.app" />
+    <meta property="og:type" content="website" />
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z8V034EGKT"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-Z8V034EGKT');
+    </script>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+        <button class="menu-btn">☰</button>
+
+        <h1 class="logo">Ateliê Fátima Bolos</h1>
+
+        <a href="#pedido" class="cart-btn">🛒</a>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-conteudo">
+            <h2 class="hero-titulo"><span id="hero-typed"></span><span class="hero-cursor">|</span></h2>
+            <p class="hero-texto">
+                Transformando momentos especiais em memórias
+                inesquecíveis com bolos artesanais feitos com amor.
+            </p>
+            <a href="#pedido" class="hero-botao">Encomende agora</a>
+        </div>
+    </section>
+
+
+    <!-- GALERIA -->
+    <section class="galeria animar" id="galeria">
+        <h2 class="secao-titulo">Nossos Bolos</h2>
+        <p class="secao-subtitulo">Cada bolo feito com amor e dedicação</p>
+
+        <div class="galeria-grid">
+            <div class="galeria-item">
+                <img src="img/bolo1.jpg" alt="Bolo Monsters Inc" />
+            </div>
+            <div class="galeria-item">
+                <img src="img/bolo2.jpg" alt="Bolo Floral Rosa" />
+            </div>
+            <div class="galeria-item">
+                <img src="img/bolo3.jpg" alt="Bolo de Chocolate" />
+            </div>
+            <div class="galeria-item">
+                <img src="img/bolo4.jpg" alt="Bolo Floresta Negra" />
+            </div>
+        </div>
+    </section>
+
+    <!-- MASSAS -->
+    <section class="massas animar" id="massas">
+        <h2 class="secao-titulo">Monte seu Bolo</h2>
+        <p class="secao-subtitulo">Comece escolhendo a massa</p>
+
+        <div class="massas-grid">
+            <label class="massa-card">
+                <input type="radio" name="massa" value="Pão de Ló Tradicional" checked />
+                <div class="massa-conteudo">
+                    <span class="massa-icone">🎂</span>
+                    <span class="massa-nome">Pão de Ló Tradicional</span>
+                </div>
+            </label>
+
+            <label class="massa-card">
+                <input type="radio" name="massa" value="Pão de Ló de Chocolate" />
+                <div class="massa-conteudo">
+                    <span class="massa-icone">🍫</span>
+                    <span class="massa-nome">Pão de Ló de Chocolate</span>
+                </div>
+            </label>
+
+        </div>
+    </section>
+
+    <!-- RECHEIOS -->
+    <section class="recheios animar">
+        <p class="secao-subtitulo">Agora escolha 2 recheios - um para cada camada</p>
+
+        <!-- 1 CAMADA -->
+        <div class="camada">
+            <h3 class="camada-titulo">1ª Camada</h3>
+
+            <span class="badge-tradicional">Recheios Tradicionais</span>
+            <div class="recheios-grid">
+                <label class="recheios-pill">
+                    <input type="radio" name="recheio1" value="Dannete" checked />
+                    <span>Dannete</span>
+                </label>
+                <label class="recheios-pill">
+                    <input type="radio" name="recheio1" value="Creme de Moça" />
+                    <span>Creme de Moça</span>
+                </label>
+                <label class="recheios-pill">
+                    <input type="radio" name="recheio1" value="Leite Ninho" />
+                    <span>Leite Ninho</span>
+                </label>
+                <label class="recheios-pill">
+                    <input type="radio" name="recheio1" value="Brigadeiro" />
+                    <span>Brigadeiro</span>
+                </label>
+                <label class="recheios-pill">
+                    <input type="radio" name="recheio1" value="Brigadeiro de Maracujá" />
+                    <span>Brigadeiro de Maracujá</span>
+                </label>
+                <label class="recheios-pill">
+                    <input type="radio" name="recheio1" value="Brigadeiro de Morango Silvestre" />
+                    <span>Brigadeiro de Morango Silvestre</span>
+                </label>
+                <label class="recheios-pill">
+                    <input type="radio" name="recheio1" value="Abacaxi" />
+                    <span>Abacaxi</span>
+                </label>
+                <label class="recheios-pill">
+                    <input type="radio" name="recheio1" value="Prestígio" />
+                    <span>Prestígio</span>
+                </label>
+                <label class="recheios-pill">
+                    <input type="radio" name="recheio1" value="Ouro Branco" />
+                    <span>Ouro Branco</span>
+                </label>
+                <label class="recheios-pill">
+                    <input type="radio" name="recheio1" value="BomBom" />
+                    <span>BomBom</span>
+                </label>
+                <label class="recheios-pill">
+                    <input type="radio" name="recheio1" value="Doce de Leite" />
+                    <span>Doce de Leite</span>
+                </label>
+            </div>
+
+            <span class="badge-especial">Recheios Especiais</span>
+            <div class="recheios-grid">
+                <label class="recheios-pill especial">
+                    <input type="radio" name="recheio1" value="Damasco" />
+                    <span>Damasco</span>
+                </label>
+                <label class="recheios-pill especial">
+                    <input type="radio" name="recheio1" value="Floresta Negra" />
+                    <span>Floresta Negra</span>
+                </label>
+                <label class="recheios-pill especial">
+                    <input type="radio" name="recheio1" value="Nutella" />
+                    <span>Nutella</span>
+                </label>
+                <label class="recheios-pill especial">
+                    <input type="radio" name="recheio1" value="Mousse de chocolate" />
+                    <span>Mousse de chocolate</span>
+                </label>
+            </div>
+            <p class="aviso-especial" id="aviso1" style="display:none">* Recheio especial pode ter valor adicional</p>
+        </div>
+
+        <!-- 2ª Camada -->
+        <div class="camada">
+            <h3 class="camada-titulo">2ª Camada</h3>
+
+            <span class="badge-tradicional">Recheios Tradicionais</span>
+            <div class="recheios-grid">
+                <label class="recheios-pill">
+                    <input type="radio" name="recheio2" value="Dannete" checked />
+                    <span>Dannete</span>
+                </label>
+                <label class="recheios-pill">
+                    <input type="radio" name="recheio2" value="Creme de Moça" />
+                    <span>Creme de Moça</span>
+                </label>
+                <label class="recheios-pill">
+                    <input type="radio" name="recheio2" value="Leite Ninho" />
+                    <span>Leite Ninho</span>
+                </label>
+                <label class="recheios-pill">
+                    <input type="radio" name="recheio2" value="Brigadeiro" />
+                    <span>Brigadeiro</span>
+                </label>
+                <label class="recheios-pill">
+                    <input type="radio" name="recheio2" value="Brigadeiro de Maracujá" />
+                    <span>Brigadeiro de Maracujá</span>
+                </label>
+                <label class="recheios-pill">
+                    <input type="radio" name="recheio2" value="Brigadeiro de Morango Silvestre" />
+                    <span>Brigadeiro de Morango Silvestre</span>
+                </label>
+                <label class="recheios-pill">
+                    <input type="radio" name="recheio2" value="Abacaxi" />
+                    <span>Abacaxi</span>
+                </label>
+                <label class="recheios-pill">
+                    <input type="radio" name="recheio2" value="Prestígio" />
+                    <span>Prestígio</span>
+                </label>
+                <label class="recheios-pill">
+                    <input type="radio" name="recheio2" value="Ouro Branco" />
+                    <span>Ouro Branco</span>
+                </label>
+                <label class="recheios-pill">
+                    <input type="radio" name="recheio2" value="BomBom" />
+                    <span>BomBom</span>
+                </label>
+                <label class="recheios-pill">
+                    <input type="radio" name="recheio2" value="Doce de Leite" />
+                    <span>Doce de Leite</span>
+                </label>
+            </div>
+
+            <span class="badge-especial">Recheios Especiais</span>
+            <div class="recheios-grid">
+                <label class="recheios-pill especial">
+                    <input type="radio" name="recheio2" value="Damasco" />
+                    <span>Damasco</span>
+                </label>
+                <label class="recheios-pill especial">
+                    <input type="radio" name="recheio2" value="Floresta Negra" />
+                    <span>Floresta Negra</span>
+                </label>
+                <label class="recheios-pill especial">
+                    <input type="radio" name="recheio2" value="Nutella" />
+                    <span>Nutella</span>
+                </label>
+                <label class="recheios-pill especial">
+                    <input type="radio" name="recheio2" value="Mousse de chocolate" />
+                    <span>Mousse de chocolate</span>
+                </label>
+            </div>
+            <p class="aviso-especial" id="aviso2" style="display:none">* Recheio especial pode ter valor adicional</p>
+        </div>
+
+        <div class="resumo" id="resumo" style="display:none">
+            Seu bolo: <strong id="resumo-texto"></strong>
+        </div>
+
+    </section>
+
+    <!-- ORÇAMENTO -->
+    <section class="orcamento animar" id="orcamento">
+        <h2 class="secao-titulo">Estimativa de Preço</h2>
+        <p class="secao-subtitulo">Calcule o valor aproximado do seu bolo</p>
+
+        <div class="orcamento-caixa">
+
+            <div class="campo">
+                <label for="orc-porcoes">Número de pessoas</label>
+                <select id="orc-porcoes">
+                    <option value="8">8 a 10 pessoas - R$ 120,00</option>
+                    <option value="10">10 a 15 pessoas - R$ 145,00</option>
+                    <option value="15">15 a 20 pessoas - R$ 160,00</option>
+                    <option value="25">25 a 30 pessoas - R$ 210,00</option>
+                    <option value="40">40 a 50 pessoas - R$ 300,00</option>
+                    <option value="50">50 a 60 pessoas - R$ 380,00</option>
+                </select>
+            </div>
+
+            <div class="campo">
+                <label for="orc-decoracao">Decoração</label>
+                <select id="orc-decoracao">
+                    <option value="0">Simples (Raspas ou Babado Branco) - sem acréscimo</option>
+                    <option value="40">Decorado (Espatulado, cake board, cores e glitter) - R$ 40,00</option>
+                    <option value="15">Chantininho (Glitter, Pérola, babado, cores) - R$15,00</option>
+                </select>
+            </div>
+
+            <div class="campo">
+                <label for="orc-recheio-tipo">Tipo de recheio</label>
+                <select id="orc-recheio-tipo">
+                    <option value="0">Somente tradicionais - sem acréscimo</option>
+                    <option value="20">1 recheio especial - R$ 20,00</option>
+                    <option value="40">2 recheios especiais - R$ 40,00</option>
+                </select>
+            </div>
+
+            <div class="orcamento-resultado" id="orcamento-resultado">
+                <p class="orcamento-label">Estimativa de preço</p>
+                <p class="orcamento-valor" id="orcamento-valor">R$ 120,00</p>
+                <p class="orcamento-obs">* Valor estimado. O preço final será confirmando pela Fátima.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SOBRE -->
+    <section class="sobre animar" id="sobre">
+        <h2 class="secao-titulo">Sobre a Fátima</h2>
+        <p class="secao-subtitulo">A história por trás de cada bolo</p>
+
+        <div class="sobre-conteudo">
+            <div class="sobre-foto">
+                <img src="img/fatima.jpg" alt="Fátima, confeiteira do Ateliê" />
+            </div>
+            <div class="sobre-texto-box">
+                <p class="sobre-texto">
+                    Há anos transformando ingredientes simples em momentos inesquecíveis,
+                    Fátima coloca carinho e dedicação em cada bolo que sai do seu ateliê.
+                    Cada encomenda é feita à mão, com atenção aos detalhes e respeito ao
+                    gosto do cliente.
+                </p>
+                <ul class="sobre-diferenciais">
+                    <li>🎂 Receitas artesanais e exclusivas</li>
+                    <li>🍓 Ingredientes selecionados</li>
+                    <li>💝 Atendimento personalizado</li>
+                    <li>📅 Pontualidade na entrega</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- FORMULARIO -->
+    <section class="pedido animar" id="pedido">
+        <h2 class="secao-titulo">Agende seu Bolo</h2>
+        <p class="secao-subtitulo">Preencha os dados abaixo para iniciar sua encomenda</p>
+
+        <div class="formulario">
+
+            <div class="campo">
+                <label for="nome">Nome completo</label>
+                <input type="text" id="nome" placeholder="Seu nome" />
+            </div>
+
+            <div class="campo">
+                <label for="whatsapp">WhatsApp</label>
+                <input type="tel" id="whatsapp" placeholder="(00) 00000-0000" />
+            </div>
+
+            <div class="campo">
+                <label for="campo-massa">Massa Escolhida</label>
+                <input type="text" id="campo-massa" readonly />
+            </div>
+
+            <div class="campo">
+                <label for="campo-recheio1">Recheio — 1ª Camada</label>
+                <input type="text" id="campo-recheio1" readonly />
+            </div>
+
+            <div class="campo">
+                <label for="campo-recheio2">Recheio — 2ª Camada</label>
+                <input type="text" id="campo-recheio2" readonly>
+            </div>
+
+            <div class="campo">
+                <label for="data">Data do Evento</label>
+                <input type="date" id="data" />
+            </div>
+            <div class="campo">
+                <label for="porcoes">Número de Porções</label>
+                <select id="porcoes">
+                    <option value="8">8 a 10 pessoas</option>
+                    <option value="10">10 a 15 pessoas</option>
+                    <option value="15">15 a 20 pessoas</option>
+                    <option value="25">25 a 30 pessoas</option>
+                    <option value="40">40 a 50 pessoas</option>
+                    <option value="50">50 a 60 pessoas</option>
+                </select>
+            </div>
+            <div class="campo">
+                <label for="mensagem">Mensagem / Personalização</label>
+                <textarea id="mensagem" rows="4" placeholder="Conte-nos como voce imagina o bolo..."></textarea>    
+            </div>
+
+            <button class="botao-enviar" id="btn-enviar"
+                style="background-color:#2C1008; color:#EDD5A8; border:2px solid #EDD5A8;">
+                Enviar Solicitação ➤
+            </button>
+
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p class="footer-logo">Ateliê Fátima</p>
+        <p class="footer-texto">Doçura Tradição</p>
+
+        <div class="footer-contatos">
+            <a href="https://instagram.com/fatimabolos53" target="_blank">
+                📷 @fatimabolos53
+            </a>
+            <a href="https://wa.me/5519994870852" target="_blank">
+                💬 (19) 99487-0852
+            </a>
+        </div>
+
+        <p class="footer-horario">
+            🕒 Seg a Sex, 8h às 18h
+        </p>
+
+        <p class="footer-copy">
+            © <span id="ano-atual"></span> Ateliê Fátima Bolos —  Doçura e Tradição
+        </p>
+    </footer>
+
+    <!--MENU MOBILE -->
+    <nav class="bottom-nav">
+        <a href="#" class="nav-item ativo">
+            <span class="material-symbols-outlined">home</span>
+            <span>Início</span>
+        </a>
+        <a href="#massas" class="nav-item">
+            <span class="material-symbols-outlined">cake</span>
+            <span>Doces</span>
+        </a>
+        <a href="#pedido" class="nav-item">
+            <span class="material-symbols-outlined">calendar_month</span>
+            <span>Agenda</span>
+        </a>
+        <a href="admin/painel.html" class="nav-item">
+            <span class="material-symbols-outlined">settings</span>
+            <span>Admin</span>
+        </a>
+    </nav>
+
+    <!-- TELA DE CONFIRMAÇÃO -->
+    <div id="tela-confirmacao" style="display:none">
+        <div class="confirmacao-caixa">
+            <span class="confirmacao-icone">🎂</span>
+            <h2 class="confirmacao-titulo">Pedido Enviado!</h2>
+            <p class="confirmacao-texto">Obrigada pelo seu pedido! Em breve a Fátima entrará em contato para confirmar
+                os detalhes.</p>
+            <div class="confirmacao-resumo" id="confirmacao-resumo"></div>
+            <button class="confirmacao-btn" id="btn-novo-pedido">Fazer outro pedido</button>
+        </div>
+    </div>
+
+    <!-- BOTÃO WHATSAPP -->
+    <a href="https://wa.me/5519994870852" target="_blank" class="whatsapp-btn" title="Fale conosco no WhatsApp">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+    </a>
+
+    <script>
+
+        const fraseHero = 'Arte em Confeitaria';
+        const elTyped = document.getElementById('hero-typed');
+        let indiceTyped = 0;
+
+        function digitar() {
+            if (indiceTyped <= fraseHero.length) {
+                elTyped.textContent = fraseHero.slice(0, indiceTyped);
+                indiceTyped++;
+                setTimeout(digitar, 90);
+            }
+        }
+        document.addEventListener('DOMContentLoaded', digitar);
+
+
+        const especiais = ['Damasco', 'Floresta Negra', 'Nutella', 'Mousse de Chocolate'];
+
+        function atualizarFormulario() {
+            // pega valores selecionados
+            const massa = document.querySelector('input[name="massa"]:checked')?.value || '';
+            const recheio1 = document.querySelector('input[name="recheio1"]:checked')?.value || '';
+            const recheio2 = document.querySelector('input[name="recheio2"]:checked')?.value || '';
+
+            // preenche os campos do formulario automaticamente
+            document.getElementById('campo-massa').value = massa;
+            document.getElementById('campo-recheio1').value = recheio1;
+            document.getElementById('campo-recheio2').value = recheio2;
+
+            //mostra o resumo do bolo
+            if (massa && recheio1 && recheio2) {
+                const resumo = document.getElementById('resumo');
+                const texto = document.getElementById('resumo-texto');
+                texto.textContent = massa + ' com ' + recheio1 + ' e ' + recheio2;
+                resumo.style.display = 'block';
+            }
+        }
+
+        //escuta qualquer mudança de seleção na página
+        document.addEventListener('change', function (e) {
+            const nomes = ['massa', 'recheio1', 'recheio2'];
+            if (nomes.includes(e.target.name)) {
+                atualizarFormulario();
+            }
+        });
+
+        //roda ao carregar a página para preencher os valores padrão
+        document.addEventListener('DOMContentLoaded', function () {
+            atualizarFormulario();
+
+            //bloqueia datas passadas o campo de data
+            const campoData = document.getElementById('data');
+            const hoje = new Date();
+            const ano = hoje.getFullYear();
+            const mes = String(hoje.getMonth() + 1).padStart(2, '0');
+            const dia = String(hoje.getDate()).padStart(2, '0');
+            campoData.min = `${ano}-${mes}-${dia}`;
+        });
+
+        // URL do Google Apps Script
+        const URL_PLANILHA = 'https://script.google.com/macros/s/AKfycbydy8rZFfhOJvWK3WBv8YDpAUr9hgkz_0uEy-d6M4p9zXqY5nViLQRX6cF8EUUMvl_4XQ/exec';
+
+        // ao clicar no botão enviar
+        document.getElementById('btn-enviar').addEventListener('click', async function () {
+
+            //pega os valores dos campos
+            const nome = document.getElementById('nome').value;
+            const whatsapp = document.getElementById('whatsapp').value;
+            const massa = document.getElementById('campo-massa').value;
+            const recheio1 = document.getElementById('campo-recheio1').value;
+            const recheio2 = document.getElementById('campo-recheio2').value;
+            const dataEvento = document.getElementById('data').value;
+            const porcoes = document.getElementById('porcoes').value;
+            const mensagem = document.getElementById('mensagem').value;
+
+            // valida se os campos obrigatórios estão preenchidos 
+            if (!nome || !whatsapp || !dataEvento || !porcoes) {
+                alert('por favor preencha todos os campos obrigatórios!');
+                return;
+            }
+
+            //valida se massa foi selecionada
+            if (!massa) {
+                alert('Por favor escolha a massa do seu bolo!');
+                return;
+            }
+
+            //valida se os dois recheios foram selecionados
+            if (!recheio1) {
+                alert('Por favor escolha o recheio da 1ª camada!');
+                return;
+            }
+
+            if (!recheio2) {
+                alert('Por favor escolha o recheio da 2ª camada!');
+                return;
+            }
+
+            // valida se a data é futura
+            const dataSelecionada = new Date(dataEvento + 'T00:00:00');
+            const hoje = new Date();
+            hoje.setHours(0, 0, 0, 0);
+
+            if (dataSelecionada < hoje) {
+                alert('Por favor escolha uma data futura para o evento!');
+                return;
+            }
+
+            //muda o texto do botão para indicar envio
+            const btn = document.getElementById('btn-enviar');
+            btn.textContent = 'Enviado...';
+            btn.disabled = true;
+
+            // envia os dados para o Google Sheets
+            try {
+                await fetch(URL_PLANILHA, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        nome, whatsapp, massa,
+                        recheio1, recheio2,
+                        dataEvento, porcoes, mensagem
+                    })
+                });
+
+                // monta mensagem para o WhatsApp
+                const mensagemWhats = `Olá Fátima! Acabei de fazer um pedido pelo site 🎂
+
+        *Nome:* ${nome}
+        *Massa:* ${massa}
+        *Recheio 1ª Camada:* ${recheio1}
+        *Recheio 2ª Camada:* ${recheio2}
+        *Data do Evento:* ${dataEvento}
+        *Porções:* ${porcoes}
+        *Mensagem:* ${mensagem || 'Nenhuma'}
+
+        Aguardo a confirmação!`;
+
+                // mostra tela de confirmação
+                document.getElementById('confirmacao-resumo').innerHTML = `
+    <span>Nome</span><br>${nome}<br>
+    <span>WhatsApp</span><br>${whatsapp}<br>
+    <span>Massa</span><br>${massa}<br>
+    <span>Recheio 1ª Camada</span><br>${recheio1}<br>
+    <span>Recheio 2ª Camada</span><br>${recheio2}<br>
+    <span>Data do Evento</span><br>${dataEvento}<br>
+    <span>Porções</span><br>${porcoes} pessoas<br>
+    ${mensagem ? `<span>Mensagem</span><br>${mensagem}` : ''}
+  `;
+                document.getElementById('tela-confirmacao').style.display = 'flex';
+
+                // botão novo pedido
+                document.getElementById('btn-novo-pedido').addEventListener('click', function () {
+                    document.getElementById('tela-confirmacao').style.display = 'none';
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+
+                // abre WhatsApp automaticamente após 1 segundo
+                setTimeout(function () {
+                    window.open('https://wa.me/5519994870852?text=' + encodeURIComponent(mensagemWhats), '_blank');
+                }, 1000);
+
+
+                // limpa formulário
+                document.getElementById('nome').value = '';
+                document.getElementById('whatsapp').value = '';
+                document.getElementById('data').value = '';
+                document.getElementById('mensagem').value = '';
+
+            } catch (erro) {
+                console.log('Erro detalhado:', erro);
+                alert('Erro: ' + erro.message);
+            }
+
+            //restaura botão
+            btn.textContent = 'Enviar Solicitação ➤';
+            btn.disabled = false;
+        });
+
+        // MENU HAMBURGUER 
+        const menuBtn = document.querySelector('.menu-btn');
+        const bottomNav = document.querySelector('.bottom-nav');
+
+        menuBtn.addEventListener('click', function () {
+            //criar menu lateral se ainda existe
+            let menuLateral = document.getElementById('menu-lateral');
+
+            if (!menuLateral) {
+                menuLateral = document.createElement('div');
+                menuLateral.id = 'menu-lateral';
+                menuLateral.innerHTML = `
+                  <div id="menu-overlay"></div>
+      <nav id="menu-conteudo">
+        <button id="menu-fechar">✕</button>
+        <a href="#">🏠 Início</a>
+        <a href="#massas">🎂 Monte seu Bolo</a>
+        <a href="#sobre">💛 Sobre</a>
+        <a href="#pedido">📅 Agende</a>
+        <a href="https://instagram.com/fatimabolos53" target="_blank">📷 Instagram</a>
+        <a href="https://wa.me/5519994870852" target="_blank">💬 WhatsApp</a>
+        <a href="admin/painel.html">⚙️ Admin</a>
+      </nav>
+    `;
+                document.body.appendChild(menuLateral);
+
+                // fechar ao clicar no overlay
+                document.getElementById('menu-overlay').addEventListener('click', fecharMenu);
+                document.getElementById('menu-fechar').addEventListener('click', fecharMenu);
+
+                //fechar ao clicar em um link
+                menuLateral.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', fecharMenu);
+                });
+            }
+
+            document.getElementById('menu-conteudo').classList.add('aberto');
+            document.getElementById('menu-overlay').classList.add('aberto');
+        });
+
+        function fecharMenu() {
+            const conteudo = document.getElementById('menu-conteudo');
+            const overlay = document.getElementById('menu-overlay');
+            if (conteudo) conteudo.classList.remove('aberto');
+            if (overlay) overlay.classList.remove('aberto');
+
+        }
+
+        // =====================
+        // ANIMAÇÕES AO ROLAR
+        // =====================
+        const observer = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visivel');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.animar').forEach(function (el) {
+            observer.observe(el);
+        });
+
+        // =====================
+        // CÁLCULO DE ORÇAMENTO
+        // =====================
+        const precos = {
+            8: 120, 10: 145, 15: 160,
+            25: 210, 40: 300, 50: 380
+        };
+
+        function calcularOrcamento() {
+            const porcoes = document.getElementById('orc-porcoes').value;
+            const decoracao = parseInt(document.getElementById('orc-decoracao').value);
+            const recheio = parseInt(document.getElementById('orc-recheio-tipo').value);
+
+            const base = precos[porcoes] || 120;
+            const total = base + decoracao + recheio;
+
+            document.getElementById('orcamento-valor').textContent =
+                'R$ ' + total.toFixed(2).replace('.', ',');
+        }
+
+        document.getElementById('orc-porcoes').addEventListener('change', calcularOrcamento);
+        document.getElementById('orc-decoracao').addEventListener('change', calcularOrcamento);
+        document.getElementById('orc-recheio-tipo').addEventListener('change', calcularOrcamento);
+
+        document.getElementById('ano-atual').textContent = new Date().getFullYear();
+
+    </script>
+</body>
+
+</html>
