@@ -354,6 +354,30 @@
       font-weight: 500;
     }
 
+    .pedido-foto {
+      background-color: #1a0a05;
+      border-radius: 10px;
+      padding: 0.8rem;
+      margin-bottom: 1rem;
+    }
+
+    .pedido-foto a {
+      display: inline-block;
+      color: #EDD5A8;
+      font-size: 0.85rem;
+    }
+
+    .pedido-foto img {
+      display: block;
+      width: 100%;
+      max-width: 260px;
+      max-height: 260px;
+      object-fit: cover;
+      border-radius: 10px;
+      border: 1.5px solid #3d1a0e;
+      margin-top: 0.5rem;
+    }
+
     .pedido-mensagem {
       background-color: #1a0a05;
       border-radius: 10px;
@@ -621,6 +645,51 @@
     }
 
     // =====================
+    // SEGURANÇA: os dados vêm do formulário público, então são "escapados"
+    // antes de entrar no HTML do painel.
+    // =====================
+    function esc(valor) {
+      return String(valor === undefined || valor === null ? '' : valor)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    // texto do tamanho do bolo (pedidos novos guardam o valor inicial da faixa)
+    const TAMANHOS = {
+      '8': '8 a 10 pessoas', '10': '10 a 15 pessoas', '15': '15 a 20 pessoas',
+      '25': '25 a 30 pessoas', '40': '40 a 50 pessoas', '50': '50 a 60 pessoas',
+      '60+': 'Mais de 60 pessoas'
+    };
+
+    function textoTamanho(p) {
+      const valor = String(p.porcoes).trim();
+      if (valor === '60+') return TAMANHOS['60+'];
+      // pedidos novos têm valor estimado; os antigos continuam como "fatias"
+      if (p.valorEstimado && TAMANHOS[valor]) return TAMANHOS[valor];
+      return valor + ' fatias';
+    }
+
+    // foto de referência: usa só o código do arquivo do Drive, nunca o link bruto
+    function blocoFoto(p) {
+      const achou = String(p.fotoLink || '').match(/^https:\/\/drive\.google\.com\/file\/d\/([A-Za-z0-9_-]+)/);
+      if (!achou) return '';
+      const id = achou[1];
+      const abrir = 'https://drive.google.com/file/d/' + id + '/view';
+      const miniatura = 'https://drive.google.com/thumbnail?id=' + id + '&sz=w600';
+      return `
+      <div class="pedido-foto">
+        <p class="pedido-detalhe-label">Foto de referência</p>
+        <a href="${abrir}" target="_blank" rel="noopener noreferrer">
+          <img src="${miniatura}" alt="Foto de referência do pedido" loading="lazy"
+               onerror="this.replaceWith(document.createTextNode('Abrir foto'))">
+        </a>
+      </div>`;
+    }
+
+    // =====================
     // CRIAR CARD DO PEDIDO
     // =====================
     function criarCardPedido(p) {
@@ -643,40 +712,49 @@
     <div class="pedido-card">
       <div class="pedido-card-topo">
         <div>
-          <p class="pedido-nome">${p.nome}</p>
-          <p class="pedido-whatsapp">💬 ${p.whatsapp}</p>
+          <p class="pedido-nome">${esc(p.nome)}</p>
+          <p class="pedido-whatsapp">💬 ${esc(p.whatsapp)}</p>
         </div>
-        <span class="pedido-status ${statusClasse}">${p.status}</span>
+        <span class="pedido-status ${statusClasse}">${esc(p.status)}</span>
       </div>
 
       <div class="pedido-detalhes">
         <div class="pedido-detalhe">
           <p class="pedido-detalhe-label">Data do Evento</p>
-          <p class="pedido-detalhe-valor">📅 ${dataEvento}</p>
+          <p class="pedido-detalhe-valor">📅 ${esc(dataEvento)}</p>
         </div>
         <div class="pedido-detalhe">
           <p class="pedido-detalhe-label">Porções</p>
-          <p class="pedido-detalhe-valor">🎂 ${p.porcoes} fatias</p>
+          <p class="pedido-detalhe-valor">🎂 ${esc(textoTamanho(p))}</p>
         </div>
         <div class="pedido-detalhe">
           <p class="pedido-detalhe-label">Massa</p>
-          <p class="pedido-detalhe-valor">${p.massa}</p>
+          <p class="pedido-detalhe-valor">${esc(p.massa)}</p>
         </div>
         <div class="pedido-detalhe">
           <p class="pedido-detalhe-label">Recheio 1ª Camada</p>
-          <p class="pedido-detalhe-valor">${p.recheio1}</p>
+          <p class="pedido-detalhe-valor">${esc(p.recheio1)}</p>
         </div>
         <div class="pedido-detalhe">
           <p class="pedido-detalhe-label">Recheio 2ª Camada</p>
-          <p class="pedido-detalhe-valor">${p.recheio2}</p>
+          <p class="pedido-detalhe-valor">${esc(p.recheio2)}</p>
         </div>
+        ${p.decoracao ? `<div class="pedido-detalhe">
+          <p class="pedido-detalhe-label">Decoração</p>
+          <p class="pedido-detalhe-valor">${esc(p.decoracao)}</p>
+        </div>` : ''}
+        ${p.valorEstimado ? `<div class="pedido-detalhe">
+          <p class="pedido-detalhe-label">Valor estimado</p>
+          <p class="pedido-detalhe-valor">${esc(p.valorEstimado)}</p>
+        </div>` : ''}
         <div class="pedido-detalhe">
           <p class="pedido-detalhe-label">Recebido em</p>
-          <p class="pedido-detalhe-valor">${dataRecebido}</p>
+          <p class="pedido-detalhe-valor">${esc(dataRecebido)}</p>
         </div>
       </div>
 
-      ${p.mensagem ? `<div class="pedido-mensagem">"${p.mensagem}"</div>` : ''}
+      ${p.mensagem ? `<div class="pedido-mensagem">"${esc(p.mensagem)}"</div>` : ''}
+      ${blocoFoto(p)}
 
       <div class="pedido-acoes">
         ${botoes}
