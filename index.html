@@ -503,9 +503,9 @@
         };
         const PRECO_RECHEIO_ESPECIAL = 20;
 
-        // Mostra o botão "Anexar foto". Enquanto o Apps Script não salvar a foto,
-        // deixe false até o Apps Script salvar a foto; depois troque para true.
-        const FOTO_ATIVA = false;
+        // Mostra o botão "Anexar foto" (o Apps Script salva a foto no Google Drive).
+        // Troque para false para esconder a opção do site.
+        const FOTO_ATIVA = true;
         const FOTO_LADO_MAXIMO = 1280;     // a foto é reduzida para no máximo 1280 px
         const FOTO_QUALIDADE = 0.8;        // qualidade do JPEG (0 a 1)
         const FOTO_TAMANHO_ORIGINAL_MAX = 25 * 1024 * 1024; // recusa arquivos acima de 25 MB
@@ -905,12 +905,19 @@
                 }
 
                 // envia os dados para o Google Sheets
-                await fetch(URL_PLANILHA, {
+                const enviado = await fetch(URL_PLANILHA, {
                     method: 'POST',
-                    mode: 'no-cors',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                     body: JSON.stringify(dados)
                 });
+
+                // o Apps Script devolve o link da foto salva no Drive (se houve foto)
+                const enviouFoto = !!(FOTO_ATIVA && fotoAnexada);
+                let fotoLink = '';
+                try {
+                    const retorno = await enviado.json();
+                    fotoLink = retorno.fotoLink || '';
+                } catch (e) { /* o pedido foi enviado; só não deu para ler a resposta */ }
 
                 // mensagem para o WhatsApp da Fátima
                 const mensagemWhats = [
@@ -925,6 +932,9 @@
                     '*Decoração:* ' + p.decoracao,
                     '*Valor estimado:* ' + p.valor,
                     '*Mensagem:* ' + (mensagem || 'Nenhuma'),
+                    ...(fotoLink
+                        ? ['*Foto de referência:* ' + fotoLink]
+                        : (enviouFoto ? ['*Foto de referência:* vou enviar aqui na conversa'] : [])),
                     '',
                     'Aguardo a confirmação!'
                 ].join('\n');
@@ -944,6 +954,9 @@
                 );
                 if (mensagem) {
                     resumo.appendChild(linhaConfirmacao('Mensagem', mensagem));
+                }
+                if (fotoLink) {
+                    resumo.appendChild(linhaConfirmacao('Foto de referência', 'Enviada'));
                 }
                 $('#tela-confirmacao').style.display = 'flex';
                 document.body.classList.add('sem-rolagem');
