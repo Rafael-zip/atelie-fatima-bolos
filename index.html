@@ -506,6 +506,9 @@
         // Mostra o botão "Anexar foto" (o Apps Script salva a foto no Google Drive).
         // Troque para false para esconder a opção do site.
         const FOTO_ATIVA = true;
+        // Mostra, na tela de confirmação, uma linha com o que o Apps Script respondeu
+        // sobre a foto. Serve para descobrir problemas; depois que funcionar, troque para false.
+        const DEBUG_FOTO = true;
         const FOTO_LADO_MAXIMO = 1280;     // a foto é reduzida para no máximo 1280 px
         const FOTO_QUALIDADE = 0.8;        // qualidade do JPEG (0 a 1)
         const FOTO_TAMANHO_ORIGINAL_MAX = 25 * 1024 * 1024; // recusa arquivos acima de 25 MB
@@ -914,8 +917,9 @@
                 // o Apps Script devolve o link da foto salva no Drive (se houve foto)
                 const enviouFoto = !!(FOTO_ATIVA && fotoAnexada);
                 let fotoLink = '';
+                let retorno = null;
                 try {
-                    const retorno = await enviado.json();
+                    retorno = await enviado.json();
                     fotoLink = retorno.fotoLink || '';
                 } catch (e) { /* o pedido foi enviado; só não deu para ler a resposta */ }
 
@@ -957,6 +961,15 @@
                 }
                 if (fotoLink) {
                     resumo.appendChild(linhaConfirmacao('Foto de referência', 'Enviada'));
+                }
+                if (DEBUG_FOTO) {
+                    const diagnostico = !retorno
+                        ? 'sem resposta legível do script (versão antiga ou erro de conexão)'
+                        : 'foto anexada no site: ' + (enviouFoto ? 'sim' : 'não') +
+                          ' | recebida pelo script: ' + (retorno.fotoRecebida === undefined ? 'script antigo' : (retorno.fotoRecebida ? 'sim' : 'não')) +
+                          ' | erro: ' + (retorno.fotoErro ? (retorno.fotoMotivo || 'sim') : 'não') +
+                          ' | versão: ' + (retorno.versao || 'antiga');
+                    resumo.appendChild(linhaConfirmacao('Diagnóstico da foto', diagnostico));
                 }
                 $('#tela-confirmacao').style.display = 'flex';
                 document.body.classList.add('sem-rolagem');
