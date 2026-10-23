@@ -512,6 +512,39 @@
 
 
     // =====================
+    // SESSÃO
+    // O Apps Script devolve um código temporário no login. Ele fica só na memória
+    // desta página (ao recarregar, é preciso entrar de novo) e vai em toda ação.
+    // =====================
+    let sessao = null;
+
+    function encerrarSessao(mensagem) {
+      sessao = null;
+      document.getElementById('painel').style.display = 'none';
+      document.getElementById('tela-login').style.display = 'block';
+      if (mensagem) {
+        const erro = document.getElementById('login-erro');
+        erro.textContent = mensagem;
+        erro.style.display = 'block';
+      }
+    }
+
+    async function chamarScript(corpo) {
+      const resposta = await fetch(URL_PLANILHA, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(Object.assign({}, corpo, { sessao: sessao }))
+      });
+      const resultado = await resposta.json();
+
+      if (resultado.erro === 'nao_autorizado') {
+        encerrarSessao('Sua sessão expirou. Entre novamente.');
+        throw new Error('nao_autorizado');
+      }
+      return resultado;
+    }
+
+    // =====================
     // LOGIN COM GOOGLE
     // =====================
     window.onload = function () {
@@ -541,6 +574,7 @@
       const resultado = await verificacao.json();
 
      if (resultado.autorizado) {
+        sessao = resultado.sessao;
         document.getElementById('tela-login').style.display = 'none';
         document.getElementById('painel').style.display = 'block';
         carregarPedidos();
@@ -589,10 +623,13 @@
         const resultado = await verificacao.json();
 
         if (resultado.autorizado) {
+          sessao = resultado.sessao;
           document.getElementById('login-senha').value = '';
           document.getElementById('tela-login').style.display = 'none';
           document.getElementById('painel').style.display = 'block';
           carregarPedidos();
+        } else if (resultado.bloqueado) {
+          mostrarErroLogin('Muitas tentativas. Tente novamente em 15 minutos.');
         } else {
           mostrarErroLogin('E-mail ou senha incorretos.');
         }
@@ -606,8 +643,8 @@
 
     // botão sair
     document.getElementById('btn-sair').addEventListener('click', function () {
-      document.getElementById('painel').style.display = 'none';
-      document.getElementById('tela-login').style.display = 'block';
+      chamarScript({ acao: 'sair' }).catch(function () {});
+      encerrarSessao();
       document.getElementById('login-erro').style.display = 'none';
       google.accounts.id.disableAutoSelect();
     });
@@ -620,13 +657,7 @@
       lista.innerHTML = '<p class="carregando">Carregando pedidos...</p>';
 
       try {
-        const resposta = await fetch(URL_PLANILHA + '?acao=listar', {
-          method: 'GET',
-          redirect: 'follow'
-        });
-
-        const texto = await resposta.text();
-        const dados = JSON.parse(texto);
+        const dados = await chamarScript({ acao: 'listar' });
 
         if (!dados.pedidos || dados.pedidos.length === 0) {
           lista.innerHTML = '<p class="carregando">Nenhum pedido encontrado.</p>';
@@ -639,6 +670,7 @@
         });
 
       } catch (erro) {
+        if (erro.message === 'nao_autorizado') return;
         console.log('Erro:', erro);
         lista.innerHTML = '<p class="carregando">Erro ao carregar pedidos. Tente novamente.</p>';
       }
@@ -683,8 +715,8 @@
       <div class="pedido-foto">
         <p class="pedido-detalhe-label">Foto de referência</p>
         <a href="${abrir}" target="_blank" rel="noopener noreferrer">
-          <img src="${miniatura}" alt="Foto de referência do pedido" loading="lazy"
-               onerror="this.replaceWith(document.createTextNode('Abrir foto'))">
+          <img src="${miniatura}" alt="Foto de referência do pedido" loading="lazy" referrerpolicy="no-referrer"
+               onerror="if (!this.dataset.tentou) { this.dataset.tentou = '1'; this.src = 'https://lh3.googleusercontent.com/d/${id}=w600'; } else { this.replaceWith(document.createTextNode('Abrir foto')); }">
         </a>
       </div>`;
     }
@@ -768,39 +800,36 @@
     // =====================
     async function atualizarStatus(linha, novoStatus) {
       try {
-        await fetch(URL_PLANILHA, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ acao: 'atualizarStatus', linha, status: novoStatus })
-        });
+        const resultado = await chamarScript({ acao: 'atualizarStatus', linha: linha, status: novoStatus });
+        if (resultado.status !== 'ok') throw new Error(resultado.erro || 'erro');
 
-        setTimeout(carregarPedidos, 1000);
+        carregarPedidos();
       } catch (erro) {
+        if (erro.message === 'nao_autorizado') return;
         alert('Erro ao atualizar. Tente novamente.');
       }
     }
 
-    function arquivarPedido(btn, linha) {
+    async function arquivarPedido(btn, linha) {
       if (!confirm('Remove este pedido da planilha tambem?')) return;
 
-        const card = btn.closest('.pedido-card');
-        card.style.transition = 'opacity 0.4s';
-        card.style.opacity = '0';
+      const card = btn.closest('.pedido-card');
+      card.style.transition = 'opacity 0.4s';
+      card.style.opacity = '0.4';
 
-        //remove da planilha
-        fetch(URL_PLANILHA, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: {'Content-type': 'application/json' },
-          body: JSON.stringify({ acao: 'deletarLinha', linha: linha })
-        });
+      try {
+        const resultado = await chamarScript({ acao: 'deletarLinha', linha: linha });
+        if (resultado.status !== 'ok') throw new Error(resultado.erro || 'erro');
 
-
-        setTimeout(() => card.remove(), 400);
+        // recarrega a lista: depois de apagar, os demais pedidos mudam de linha na planilha
+        carregarPedidos();
+      } catch (erro) {
+        card.style.opacity = '1';
+        if (erro.message === 'nao_autorizado') return;
+        alert('Não foi possível remover o pedido. Tente novamente.');
       }
+    }
 
-      
   </script>
 </body>
 
