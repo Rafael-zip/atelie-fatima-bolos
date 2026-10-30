@@ -1,836 +1,1142 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="theme-color" content="#2C1008">
+    <title>Confeitaria Fátima Bolos</title>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Painel — Confeitaria Fátima Bolos</title>
+        <link rel="stylesheet" href="css/style.css" />
+        <link rel="stylesheet" href="css/home.css" />
 
-  <!--Fontes-->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link rel="icon" type="image/svg+xml" href="/img/icon.svg?v=2">
-  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32.png?v=2">
-  <link rel="icon" type="image/x-icon" href="/favicon.ico?v=2">
-  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png?v=2">
-  <link
-    href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap"
-    rel="stylesheet">
+        <!-- Fontes do Google -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap"
+            rel="stylesheet"
+        />
 
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
+        <link rel="icon" type="image/svg+xml" href="/img/icon.svg?v=2" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32.png?v=2" />
+        <link rel="icon" type="image/x-icon" href="/favicon.ico?v=2" />
+        <link rel="apple-touch-icon" href="/img/apple-touch-icon.png?v=2" />
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+        <!-- Open Graph / Compartilhamento (WhatsApp, Instagram, Facebook) -->
+        <meta property="og:title" content="Confeitaria Fátima Bolos" />
+        <meta property="og:description" content="Bolos artesanais feitos com amor. encomende o seu" />
+        <meta property="og:image" content="https://atelie-da-fatima.netlify.app/img/og-image.jpg" />
+        <meta property="og:url" content="https://atelie-da-fatima.netlify.app" />
+        <meta property="og:type" content="website" />
 
-    body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      background-color: #1a0a05;
-      color: #ffdbce;
-    }
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z8V034EGKT"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
 
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-
-    /* =====================
-       LOGIN
-       ===================== */
-    .login-caixa {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem;
-    }
-
-    .login-logo {
-      font-family: 'Dancing Script', cursive;
-      font-size: 2.5rem;
-      color: #EDD5A8;
-      margin-bottom: 0.5rem;
-    }
-
-    .login-subtitulo {
-      font-size: 0.9rem;
-      color: #C49060;
-      margin-bottom: 2rem;
-    }
-
-    .login-campo {
-      width: 100%;
-      max-width: 320px;
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-      margin-bottom: 1rem;
-    }
-
-    .login-campo label {
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: #C49060;
-    }
-
-    .login-campo input {
-      background-color: #2C1008;
-      border: 1.5px solid #3d1a0e;
-      border-radius: 10px;
-      padding: 0.8rem 1rem;
-      color: #EDD5A8;
-      font-size: 0.95rem;
-      outline: none;
-      transition: border 0.2s;
-      width: 100%;
-    }
-
-    .login-campo input:focus {
-      border-color: #EDD5A8;
-    }
-
-    #btn-login {
-      width: 100%;
-      max-width: 320px;
-      background-color: #2C1008;
-      color: #EDD5A8;
-      border: 2px solid #EDD5A8;
-      border-radius: 50px;
-      padding: 0.8rem;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-
-    #btn-login:hover {
-      background-color: #EDD5A8;
-      color: #2C1008;
-    }
-
-    .login-erro {
-      color: #e8798f;
-      font-size: 0.85rem;
-      margin-top: 0.8rem;
-      text-align: center;
-      display: none;
-    }
-
-    .login-card {
-      width: 100%;
-      max-width: 380px;
-      padding: 2.2rem 2rem;
-      background-color: #2C1008;
-      border: 1px solid #3d1a0e;
-      border-radius: 20px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
-      text-align: center;
-    }
-
-    .login-card .login-subtitulo {
-      margin-bottom: 1.6rem;
-    }
-
-    .login-form {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: left;
-    }
-
-    .login-card .login-campo,
-    .login-card #btn-login {
-      max-width: none;
-    }
-
-    .login-card .login-campo input {
-      background-color: #1a0a05;
-    }
-
-    .login-senha {
-      position: relative;
-    }
-
-    .login-senha input {
-      padding-right: 3.2rem;
-    }
-
-    #btn-mostrar-senha {
-      position: absolute;
-      right: 0.4rem;
-      bottom: 0.35rem;
-      background: none;
-      border: 0;
-      padding: 0.45rem 0.6rem;
-      color: #C49060;
-      font-size: 0.75rem;
-      font-weight: 600;
-      cursor: pointer;
-    }
-
-    #btn-login {
-      margin-top: 0.4rem;
-      background-color: #EDD5A8;
-      color: #2C1008;
-    }
-
-    #btn-login:hover {
-      background-color: #C49060;
-      border-color: #C49060;
-    }
-
-    #btn-login:disabled {
-      opacity: 0.6;
-      cursor: wait;
-    }
-
-    .login-divisor {
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      width: 100%;
-      margin: 1.4rem 0;
-      font-size: 0.8rem;
-      color: #C49060;
-    }
-
-    .login-divisor::before,
-    .login-divisor::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background-color: #3d1a0e;
-    }
-
-    #google-btn-container {
-      display: flex;
-      justify-content: center;
-    }
-
-    /* =====================
-       HEADER DO PAINEL
-       ===================== */
-    .painel-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1rem 1.5rem;
-      background-color: #2C1008;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-
-    .painel-logo {
-      font-family: 'Dancing Script', cursive;
-      font-size: 1.4rem;
-      color: #EDD5A8;
-    }
-
-    #btn-sair {
-      background: none;
-      border: 1.5px solid #EDD5A8;
-      border-radius: 50px;
-      padding: 0.4rem 1rem;
-      color: #EDD5A8;
-      font-size: 0.85rem;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-
-    #btn-sair:hover {
-      background-color: #EDD5A8;
-      color: #2C1008;
-    }
-
-    /* =====================
-       CONTEÚDO DO PAINEL
-       ===================== */
-    .painel-conteudo {
-      padding: 2rem 1.5rem;
-      max-width: 800px;
-      margin: 0 auto;
-    }
-
-    .painel-titulo {
-      font-family: 'Dancing Script', cursive;
-      font-size: 2rem;
-      color: #EDD5A8;
-      margin-bottom: 2rem;
-    }
-
-    .painel-subtitulo {
-      font-size: 0.9rem;
-      color: #C49060;
-      margin-bottom: 2rem;
-    }
-
-    .carregando {
-      text-align: center;
-      color: #C49060;
-      padding: 2rem;
-    }
-
-    /* =====================
-       CARDS DE PEDIDO
-       ===================== */
-    .pedido-card {
-      background-color: #2C1008;
-      border: 1.5px solid #3d1a0e;
-      border-radius: 16px;
-      padding: 1.5rem;
-      margin-bottom: 1rem;
-    }
-
-    .pedido-card-topo {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 1rem;
-    }
-
-    .pedido-nome {
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: #EDD5A8;
-    }
-
-    .pedido-whatsapp {
-      font-size: 0.85rem;
-      color: #C49060;
-      margin-top: 0.2rem;
-    }
-
-    .pedido-status {
-      font-size: 0.75rem;
-      font-weight: 700;
-      padding: 0.3rem 0.8rem;
-      border-radius: 50px;
-    }
-
-    .status-novo {
-      background-color: #fce4ec;
-      color: #880e4f;
-    }
-
-    .status-confirmado {
-      background-color: #c8e6c9;
-      color: #1b5e20;
-    }
-
-    .status-concluido {
-      background-color: #eeeeee;
-      color: #424242;
-    }
-
-    .pedido-detalhes {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.8rem;
-      margin-bottom: 1rem;
-    }
-
-    .pedido-detalhe {
-      background-color: #1a0a05;
-      border-radius: 10px;
-      padding: 0.6rem 0.8rem;
-    }
-
-    .pedido-detalhe-label {
-      font-size: 0.7rem;
-      color: #C49060;
-      text-transform: uppercase;
-      letter-spacing: 0.05rem;
-      margin-bottom: 0.2rem;
-    }
-
-    .pedido-detalhe-valor {
-      font-size: 0.9rem;
-      color: #EDD5A8;
-      font-weight: 500;
-    }
-
-    .pedido-foto {
-      background-color: #1a0a05;
-      border-radius: 10px;
-      padding: 0.8rem;
-      margin-bottom: 1rem;
-    }
-
-    .pedido-foto a {
-      display: inline-block;
-      color: #EDD5A8;
-      font-size: 0.85rem;
-    }
-
-    .pedido-foto img {
-      display: block;
-      width: 100%;
-      max-width: 260px;
-      max-height: 260px;
-      object-fit: cover;
-      border-radius: 10px;
-      border: 1.5px solid #3d1a0e;
-      margin-top: 0.5rem;
-    }
-
-    .pedido-mensagem {
-      background-color: #1a0a05;
-      border-radius: 10px;
-      padding: 0.8rem;
-      font-size: 0.85rem;
-      color: #C49060;
-      font-style: italic;
-      margin-bottom: 1rem;
-    }
-
-    .pedido-acoes {
-      display: flex;
-      gap: 0.8rem;
-      flex-wrap: wrap;
-    }
-
-    .btn-confirmar {
-      flex: 1;
-      padding: 0.7rem;
-      background-color: #1a0a05;
-      color: #fff;
-      border: none;
-      border-radius: 10px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: opacity 0.2s;
-    }
-
-    .btn-confirmar:hover {
-      opacity: 0.85;
-    }
-
-    .btn-concluir {
-      flex: 1;
-      padding: 0.7rem;
-      background-color: #2C1008;
-      color: #EDD5A8;
-      border: 1.5px solid #EDD5A8;
-      border-radius: 10px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .btn-concluir:hover {
-      background-color: #EDD5A8;
-      color: #2C1008;
-    }
-
-    .btn-arquivar {
-      background: none;
-      border: 1.5px solid #7a4a35;
-      border-radius: 10px;
-      padding: 0.6rem 1rem;
-      color: #7a4a35;
-      font-size: 0.85rem;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .btn-arquivar:hover {
-      border-color: #B8405F;
-      color: #B8405F;
-
-    }
-  </style>
-</head>
+            gtag('config', 'G-Z8V034EGKT');
+        </script>
+    </head>
 
 <body>
+    <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+        <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+        <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+        <symbol id="i-bag" viewBox="0 0 24 24"><path d="M6 7h12l1 13H5z"/><path d="M9 7a3 3 0 0 1 6 0"/></symbol>
+        <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9a1 1 0 0 1-1 1h-4v-6h-6v6H5a1 1 0 0 1-1-1z"/></symbol>
+        <symbol id="i-cake" viewBox="0 0 24 24"><path d="M20 21v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8"/><path d="M4 16s.5-1 2-1 2.5 2 4 2 2.5-2 4-2 2.5 2 4 2 2-1 2-1"/><path d="M2 21h20"/><path d="M7 8v3M12 8v3M17 8v3"/><path d="M7 4h.01M12 4h.01M17 4h.01"/></symbol>
+        <symbol id="i-chocolate" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M5 7.5h14M5 12h14M5 16.5h14M12 3v18"/></symbol>
+        <symbol id="i-cookie" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"/><path d="M8.5 8.5v.01M16 15.5v.01M12 12v.01M11 17v.01M7 14v.01"/></symbol>
+        <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18"/></symbol>
+        <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></symbol>
+        <symbol id="i-instagram" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></symbol>
+        <symbol id="i-chat" viewBox="0 0 24 24"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22z"/></symbol>
+        <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+        <symbol id="i-sparkles" viewBox="0 0 24 24"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M19 15l.7 1.8 1.8.7-1.8.7L19 20l-.7-1.8-1.8-.7 1.8-.7z"/></symbol>
+        <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></symbol>
+        <symbol id="i-heart" viewBox="0 0 24 24"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7z"/></symbol>
+        <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+        <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+        <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></symbol>
+        <symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+        <symbol id="i-user" viewBox="0 0 24 24"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+        <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
+        <symbol id="i-send" viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4z"/><path d="M22 2 11 13"/></symbol>
+        <symbol id="i-whatsapp" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></symbol>
+        <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></symbol>
+        <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 2 10 5-10 5L2 7z"/><path d="m2 12 10 5 10-5"/><path d="m2 17 10 5 10-5"/></symbol>
+    </svg>
 
-  <!--TELA DE LOGIN -->
-  <div id="tela-login">
+    <!-- HEADER -->
+    <header class="header">
+        <button type="button" class="icon-btn menu-btn" id="btn-menu" aria-label="Abrir menu" aria-controls="menu-conteudo"><svg class="ic" aria-hidden="true"><use href="#i-menu"/></svg></button>
 
-    <div class="login-caixa">
-      <div class="login-card">
-        <h1 class="login-logo">Confeitaria Fátima</h1>
-        <p class="login-subtitulo">Painel Administrativo</p>
+        <a href="#inicio" class="logo" aria-label="Confeitaria Fátima Bolos — início">
+            <span class="logo-marca"><svg class="ic" aria-hidden="true"><use href="#i-cake"/></svg></span>
+            <span class="logo-texto">Confeitaria Fátima Bolos</span>
+        </a>
 
-        <form id="form-login" class="login-form" novalidate>
-          <div class="login-campo">
-            <label for="login-email">E-mail</label>
-            <input type="email" id="login-email" autocomplete="username" placeholder="seu@email.com" required>
-          </div>
-          <div class="login-campo login-senha">
-            <label for="login-senha">Senha</label>
-            <input type="password" id="login-senha" autocomplete="current-password" placeholder="Sua senha" required>
-            <button type="button" id="btn-mostrar-senha" aria-label="Mostrar senha">Mostrar</button>
-          </div>
-          <button type="submit" id="btn-login">Entrar</button>
-        </form>
+        <nav class="nav-desktop" aria-label="Principal">
+            <a href="#inicio" data-sec="inicio">Início</a>
+            <a href="#massas" data-sec="massas">Monte seu bolo</a>
+            <a href="#pedido" data-sec="pedido">Agende</a>
+            <a href="#sobre" data-sec="sobre">Sobre</a>
+            <a href="admin/painel.html">Admin</a>
+        </nav>
 
-        <div class="login-divisor">ou</div>
-
-        <div id="google-btn-container"></div>
-        <p id="login-erro" class="login-erro" role="alert">Acesso não autorizado para essa conta.</p>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- PAINEL PRINCIPAL (começa escondida) -->
-  <div id="painel" style="display:none">
-
-    <!--HEADER-->
-    <header class="painel-header">
-      <h1 class="painel-logo">Confeitaria Fátima</h1>
-      <button id="btn-sair">Sair</button>
+        <a href="#pedido" class="icon-btn cart-btn" aria-label="Ir para o pedido"><svg class="ic" aria-hidden="true"><use href="#i-bag"/></svg></a>
     </header>
 
-    <!--CONTEÚDO -->
-    <main class="painel-conteudo">
-      <h2 class="painel-titulo">Pedidos recebidos</h2>
-      <p class="painel-subtitulo">Gerencie as encomendas da confeitaria</p>
+    <main>
+        <!-- HERO -->
+        <section class="hero" id="inicio">
+            <div class="hero-conteudo">
+                <span class="hero-selo"><svg class="ic" aria-hidden="true"><use href="#i-sparkles"/></svg>Bolos artesanais sob encomenda</span>
+                <h1 class="hero-titulo"><span id="hero-typed">Arte em Confeitaria</span><span class="hero-cursor" aria-hidden="true">|</span></h1>
+                <p class="hero-texto">
+                    Transformando momentos especiais em memórias inesquecíveis com bolos artesanais feitos com amor.
+                </p>
+                <div class="hero-botoes">
+                    <a href="#massas" class="botao botao-primario">Encomende agora <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+                    <a href="#galeria" class="botao botao-contorno">Ver galeria</a>
+                </div>
+            </div>
+        </section>
 
-      <!--LISTA DE PEDIDOS -->
-      <div id="lista-pedidos">
-        <p class="carregando">Carregando pedidos...</p>
-      </div>
+        <!-- DIFERENCIAIS -->
+        <section class="diferenciais" aria-label="Nossos diferenciais">
+            <ul class="diferenciais-lista">
+                <li><svg class="ic" aria-hidden="true"><use href="#i-sparkles"/></svg>Feito à mão</li>
+                <li><svg class="ic" aria-hidden="true"><use href="#i-leaf"/></svg>Ingredientes selecionados</li>
+                <li><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>Entrega pontual</li>
+            </ul>
+        </section>
+
+        <!-- GALERIA -->
+        <section class="galeria animar" id="galeria">
+            <h2 class="secao-titulo">Nossos Bolos</h2>
+            <p class="frase-efeito">Doçura e Tradição</p>
+
+            <div class="galeria-grid">
+                <figure class="galeria-item">
+                    <img src="img/bolo1.jpg" alt="Bolo Monsters Inc" loading="lazy" />
+                </figure>
+                <figure class="galeria-item">
+                    <img src="img/bolo2.jpg" alt="Bolo Floral Rosa" loading="lazy" />
+                </figure>
+                <figure class="galeria-item">
+                    <img src="img/bolo3.jpg" alt="Bolo de Chocolate" loading="lazy" />
+                </figure>
+                <figure class="galeria-item">
+                    <img src="img/bolo4.jpg" alt="Bolo Floresta Negra" loading="lazy" />
+                </figure>
+            </div>
+
+            <div class="galeria-cta">
+                <a href="#massas" class="botao botao-ouro">Montar meu bolo <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+            </div>
+        </section>
+
+        <!-- MONTE SEU BOLO -->
+        <section class="massas" id="massas">
+            <h2 class="secao-titulo">Monte seu Bolo</h2>
+            <p class="secao-subtitulo">Escolha cada detalhe do seu bolo em 4 passos</p>
+
+            <div class="montar">
+                <nav class="etapas" aria-label="Etapas do pedido">
+                    <a href="#passo-massa" class="etapa ativa" data-passo="passo-massa"><span class="etapa-num"><b>1</b><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>Massa</a>
+                    <a href="#passo-tamanho" class="etapa" data-passo="passo-tamanho"><span class="etapa-num"><b>2</b><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>Tamanho</a>
+                    <a href="#passo-recheios" class="etapa" data-passo="passo-recheios"><span class="etapa-num"><b>3</b><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>Recheios</a>
+                    <a href="#passo-decoracao" class="etapa" data-passo="passo-decoracao"><span class="etapa-num"><b>4</b><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>Decoração</a>
+                </nav>
+
+                <div class="passos">
+                    <!-- PASSO 1 · MASSA -->
+                    <div class="passo" id="passo-massa">
+                        <div class="passo-cab">
+                            <span class="passo-num"><b>1</b><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>
+                            <div><h3>Escolha a massa</h3><p>Base do seu bolo</p></div>
+                        </div>
+                        <div class="opcoes">
+                            <label class="opcao">
+                                <input type="radio" name="massa" value="Pão de Ló Tradicional" checked>
+                                <span class="opcao-icone"><svg class="ic" aria-hidden="true"><use href="#i-cake"/></svg></span>
+                                <span class="opcao-texto"><strong>Pão de Ló Tradicional</strong></span>
+                                <span class="check"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>
+                            </label>
+                            <label class="opcao">
+                                <input type="radio" name="massa" value="Pão de Ló de Chocolate">
+                                <span class="opcao-icone"><svg class="ic" aria-hidden="true"><use href="#i-chocolate"/></svg></span>
+                                <span class="opcao-texto"><strong>Pão de Ló de Chocolate</strong></span>
+                                <span class="check"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- PASSO 2 · TAMANHO (acima dos recheios) -->
+                    <div class="passo" id="passo-tamanho">
+                        <div class="passo-cab">
+                            <span class="passo-num"><b>2</b><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>
+                            <div><h3>Tamanho do bolo</h3><p>Quantas pessoas o bolo deve servir?</p></div>
+                        </div>
+                        <div class="tamanhos">
+                            <label class="tamanho"><input type="radio" name="porcoes" value="8" checked>
+                                <span class="tamanho-topo"><svg class="ic" aria-hidden="true"><use href="#i-users"/></svg>pessoas</span>
+                                <strong>8 a 10</strong>
+                                <span class="tamanho-preco">R$ 120,00</span>
+                                <span class="check"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>
+                            </label>
+                            <label class="tamanho"><input type="radio" name="porcoes" value="10">
+                                <span class="tamanho-topo"><svg class="ic" aria-hidden="true"><use href="#i-users"/></svg>pessoas</span>
+                                <strong>10 a 15</strong>
+                                <span class="tamanho-preco">R$ 145,00</span>
+                                <span class="check"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>
+                            </label>
+                            <label class="tamanho"><input type="radio" name="porcoes" value="15">
+                                <span class="tamanho-topo"><svg class="ic" aria-hidden="true"><use href="#i-users"/></svg>pessoas</span>
+                                <strong>15 a 20</strong>
+                                <span class="tamanho-preco">R$ 160,00</span>
+                                <span class="check"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>
+                            </label>
+                            <label class="tamanho"><input type="radio" name="porcoes" value="25">
+                                <span class="tamanho-topo"><svg class="ic" aria-hidden="true"><use href="#i-users"/></svg>pessoas</span>
+                                <strong>25 a 30</strong>
+                                <span class="tamanho-preco">R$ 210,00</span>
+                                <span class="check"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>
+                            </label>
+                            <label class="tamanho"><input type="radio" name="porcoes" value="40">
+                                <span class="tamanho-topo"><svg class="ic" aria-hidden="true"><use href="#i-users"/></svg>pessoas</span>
+                                <strong>40 a 50</strong>
+                                <span class="tamanho-preco">R$ 300,00</span>
+                                <span class="check"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>
+                            </label>
+                            <label class="tamanho"><input type="radio" name="porcoes" value="50">
+                                <span class="tamanho-topo"><svg class="ic" aria-hidden="true"><use href="#i-users"/></svg>pessoas</span>
+                                <strong>50 a 60</strong>
+                                <span class="tamanho-preco">R$ 380,00</span>
+                                <span class="check"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>
+                            </label>
+                            <label class="tamanho tamanho-consulta"><input type="radio" name="porcoes" value="60+">
+                                <span class="tamanho-consulta-icone"><svg class="ic" aria-hidden="true"><use href="#i-chat"/></svg></span>
+                                <span class="tamanho-consulta-texto"><strong>Mais de 60 pessoas</strong><small>Sob consulta · combine direto com a Fátima pelo WhatsApp</small></span>
+                                <span class="check"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- PASSO 3 · RECHEIOS -->
+                    <div class="passo" id="passo-recheios">
+                        <div class="passo-cab">
+                            <span class="passo-num"><b>3</b><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>
+                            <div><h3>Escolha 2 recheios</h3><p>Um para cada camada</p></div>
+                        </div>
+                        <div class="camada aberta" id="camada1">
+                            <button type="button" class="camada-cab" aria-expanded="true" aria-controls="camada1-corpo">
+                                <span class="camada-rotulo"><svg class="ic" aria-hidden="true"><use href="#i-layers"/></svg>1ª Camada</span>
+                                <span class="camada-escolha" id="escolha1">Dannete</span>
+                                <svg class="ic camada-seta" aria-hidden="true"><use href="#i-chevron"/></svg>
+                            </button>
+                            <div class="camada-corpo" id="camada1-corpo">
+                                <p class="pills-titulo">Tradicionais</p>
+                                <div class="pills">
+                                    <label class="pill"><input type="radio" name="recheio1" value="Dannete" checked><span>Dannete</span></label>
+                                    <label class="pill"><input type="radio" name="recheio1" value="Creme de Moça"><span>Creme de Moça</span></label>
+                                    <label class="pill"><input type="radio" name="recheio1" value="Leite Ninho"><span>Leite Ninho</span></label>
+                                    <label class="pill"><input type="radio" name="recheio1" value="Brigadeiro"><span>Brigadeiro</span></label>
+                                    <label class="pill"><input type="radio" name="recheio1" value="Brigadeiro de Maracujá"><span>Brigadeiro de Maracujá</span></label>
+                                    <label class="pill"><input type="radio" name="recheio1" value="Brigadeiro de Morango Silvestre"><span>Brigadeiro de Morango Silvestre</span></label>
+                                    <label class="pill"><input type="radio" name="recheio1" value="Abacaxi"><span>Abacaxi</span></label>
+                                    <label class="pill"><input type="radio" name="recheio1" value="Prestígio"><span>Prestígio</span></label>
+                                    <label class="pill extra"><input type="radio" name="recheio1" value="Ouro Branco"><span>Ouro Branco</span></label>
+                                    <label class="pill extra"><input type="radio" name="recheio1" value="BomBom"><span>BomBom</span></label>
+                                    <label class="pill extra"><input type="radio" name="recheio1" value="Doce de Leite"><span>Doce de Leite</span></label>
+                                    <button type="button" class="pill-mais" data-mais>+3 opções</button>
+                                </div>
+                                <p class="pills-titulo">Especiais · + R$ 20,00</p>
+                                <div class="pills">
+                                    <label class="pill especial"><input type="radio" name="recheio1" value="Damasco"><span><svg class="ic" aria-hidden="true"><use href="#i-sparkles"/></svg>Damasco</span></label>
+                                    <label class="pill especial"><input type="radio" name="recheio1" value="Floresta Negra"><span><svg class="ic" aria-hidden="true"><use href="#i-sparkles"/></svg>Floresta Negra</span></label>
+                                    <label class="pill especial"><input type="radio" name="recheio1" value="Nutella"><span><svg class="ic" aria-hidden="true"><use href="#i-sparkles"/></svg>Nutella</span></label>
+                                    <label class="pill especial"><input type="radio" name="recheio1" value="Mousse de chocolate"><span><svg class="ic" aria-hidden="true"><use href="#i-sparkles"/></svg>Mousse de chocolate</span></label>
+                                </div>
+                                <p class="aviso-especial" id="aviso1" hidden>* Recheio especial: + R$ 20,00</p>
+                            </div>
+                        </div>
+                        <div class="camada" id="camada2">
+                            <button type="button" class="camada-cab" aria-expanded="false" aria-controls="camada2-corpo">
+                                <span class="camada-rotulo"><svg class="ic" aria-hidden="true"><use href="#i-layers"/></svg>2ª Camada</span>
+                                <span class="camada-escolha" id="escolha2">Dannete</span>
+                                <svg class="ic camada-seta" aria-hidden="true"><use href="#i-chevron"/></svg>
+                            </button>
+                            <div class="camada-corpo" id="camada2-corpo">
+                                <p class="pills-titulo">Tradicionais</p>
+                                <div class="pills">
+                                    <label class="pill"><input type="radio" name="recheio2" value="Dannete" checked><span>Dannete</span></label>
+                                    <label class="pill"><input type="radio" name="recheio2" value="Creme de Moça"><span>Creme de Moça</span></label>
+                                    <label class="pill"><input type="radio" name="recheio2" value="Leite Ninho"><span>Leite Ninho</span></label>
+                                    <label class="pill"><input type="radio" name="recheio2" value="Brigadeiro"><span>Brigadeiro</span></label>
+                                    <label class="pill"><input type="radio" name="recheio2" value="Brigadeiro de Maracujá"><span>Brigadeiro de Maracujá</span></label>
+                                    <label class="pill"><input type="radio" name="recheio2" value="Brigadeiro de Morango Silvestre"><span>Brigadeiro de Morango Silvestre</span></label>
+                                    <label class="pill"><input type="radio" name="recheio2" value="Abacaxi"><span>Abacaxi</span></label>
+                                    <label class="pill"><input type="radio" name="recheio2" value="Prestígio"><span>Prestígio</span></label>
+                                    <label class="pill extra"><input type="radio" name="recheio2" value="Ouro Branco"><span>Ouro Branco</span></label>
+                                    <label class="pill extra"><input type="radio" name="recheio2" value="BomBom"><span>BomBom</span></label>
+                                    <label class="pill extra"><input type="radio" name="recheio2" value="Doce de Leite"><span>Doce de Leite</span></label>
+                                    <button type="button" class="pill-mais" data-mais>+3 opções</button>
+                                </div>
+                                <p class="pills-titulo">Especiais · + R$ 20,00</p>
+                                <div class="pills">
+                                    <label class="pill especial"><input type="radio" name="recheio2" value="Damasco"><span><svg class="ic" aria-hidden="true"><use href="#i-sparkles"/></svg>Damasco</span></label>
+                                    <label class="pill especial"><input type="radio" name="recheio2" value="Floresta Negra"><span><svg class="ic" aria-hidden="true"><use href="#i-sparkles"/></svg>Floresta Negra</span></label>
+                                    <label class="pill especial"><input type="radio" name="recheio2" value="Nutella"><span><svg class="ic" aria-hidden="true"><use href="#i-sparkles"/></svg>Nutella</span></label>
+                                    <label class="pill especial"><input type="radio" name="recheio2" value="Mousse de chocolate"><span><svg class="ic" aria-hidden="true"><use href="#i-sparkles"/></svg>Mousse de chocolate</span></label>
+                                </div>
+                                <p class="aviso-especial" id="aviso2" hidden>* Recheio especial: + R$ 20,00</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PASSO 4 · DECORAÇÃO -->
+                    <div class="passo" id="passo-decoracao">
+                        <div class="passo-cab">
+                            <span class="passo-num"><b>4</b><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>
+                            <div><h3>Decoração</h3><p>Acabamento do bolo</p></div>
+                        </div>
+                        <div class="opcoes">
+                            <label class="opcao">
+                                <input type="radio" name="decoracao" value="0" data-nome="Simples" checked>
+                                <span class="opcao-icone"><svg class="ic" aria-hidden="true"><use href="#i-sparkles"/></svg></span>
+                                <span class="opcao-texto"><strong>Simples</strong><small>Raspas ou babado branco</small></span>
+                                <span class="opcao-preco">incluso</span>
+                                <span class="check"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>
+                            </label>
+                            <label class="opcao">
+                                <input type="radio" name="decoracao" value="40" data-nome="Decorado">
+                                <span class="opcao-icone"><svg class="ic" aria-hidden="true"><use href="#i-sparkles"/></svg></span>
+                                <span class="opcao-texto"><strong>Decorado</strong><small>Espatulado, cake board, cores e glitter</small></span>
+                                <span class="opcao-preco">+ R$ 40</span>
+                                <span class="check"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>
+                            </label>
+                            <label class="opcao">
+                                <input type="radio" name="decoracao" value="15" data-nome="Chantininho">
+                                <span class="opcao-icone"><svg class="ic" aria-hidden="true"><use href="#i-sparkles"/></svg></span>
+                                <span class="opcao-texto"><strong>Chantininho</strong><small>Glitter, pérola, babado, cores</small></span>
+                                <span class="opcao-preco">+ R$ 15</span>
+                                <span class="check"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- RESUMO E VALOR -->
+                    <div class="resumo-valor" id="resumo" aria-live="polite">
+                        <p class="rotulo-mini">Seu bolo</p>
+                        <p id="resumo-texto"></p>
+                        <hr>
+                        <div class="valor-linha">
+                            <div>
+                                <span class="valor-rotulo">Valor estimado</span>
+                                <span class="valor-obs">* O preço final será confirmado pela Fátima.</span>
+                            </div>
+                            <span class="valor-numero" id="orcamento-valor">R$ 120,00</span>
+                        </div>
+                        <p class="valor-aviso" id="aviso-consulta" hidden>Para bolos acima de 60 pessoas o valor é combinado direto com a Fátima. Toque no botão verde para conversar pelo WhatsApp já com as suas escolhas.</p>
+                        <a href="#" class="botao botao-whats botao-total" id="cta-whats" target="_blank" rel="noopener" hidden>Combinar pelo WhatsApp <svg class="ic ic-fill" aria-hidden="true"><use href="#i-whatsapp"/></svg></a>
+                        <a href="#pedido" class="botao botao-primario botao-total" id="cta-continuar">Continuar para o agendamento <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FORMULÁRIO -->
+        <section class="pedido animar" id="pedido">
+            <h2 class="secao-titulo">Agende seu Bolo</h2>
+            <p class="secao-subtitulo">Preencha os dados abaixo para iniciar sua encomenda</p>
+
+            <div class="formulario">
+                <div class="campo">
+                    <label for="nome">Nome completo</label>
+                    <div class="campo-input"><svg class="ic" aria-hidden="true"><use href="#i-user"/></svg><input type="text" id="nome" placeholder="Seu nome" autocomplete="name" maxlength="80" /></div>
+                </div>
+
+                <div class="campo">
+                    <label for="whatsapp">WhatsApp</label>
+                    <div class="campo-input"><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg><input type="tel" id="whatsapp" placeholder="(00) 00000-0000" autocomplete="tel" inputmode="tel" maxlength="20" /></div>
+                </div>
+
+                <div class="campo">
+                    <label for="data">Data do evento</label>
+                    <div class="campo-input"><svg class="ic" aria-hidden="true"><use href="#i-calendar"/></svg><input type="date" id="data" /></div>
+                </div>
+
+                <div class="campo">
+                    <label for="mensagem">Mensagem / Personalização</label>
+                    <div class="campo-input alinha-topo" id="campo-mensagem"><svg class="ic" aria-hidden="true"><use href="#i-sparkles"/></svg><textarea id="mensagem" maxlength="500" rows="4" placeholder="Conte-nos como você imagina o bolo: tema, cores, nome, frase no topo..."></textarea></div>
+
+                    <div class="anexo" id="anexo">
+                        <input type="file" id="foto" accept="image/*" hidden />
+                        <button type="button" class="anexo-botao" id="btn-foto"><svg class="ic" aria-hidden="true"><use href="#i-image"/></svg>Anexar foto de referência <small>(opcional)</small></button>
+                        <div class="anexo-previa" id="anexo-previa" hidden>
+                            <img id="foto-previa" alt="Prévia da foto anexada" />
+                            <div class="anexo-info"><strong id="foto-nome"></strong><small id="foto-tamanho"></small></div>
+                            <button type="button" class="anexo-remover" id="btn-remover-foto" aria-label="Remover foto"><svg class="ic" aria-hidden="true"><use href="#i-x"/></svg></button>
+                        </div>
+                        <p class="anexo-erro" id="foto-erro" role="alert" hidden></p>
+                    </div>
+                </div>
+
+                <div class="resumo-pedido">
+                    <h3><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>Resumo do seu pedido</h3>
+                    <dl>
+                        <div class="linha"><dt>Massa</dt><dd id="r-massa"></dd></div>
+                        <div class="linha"><dt>Tamanho</dt><dd id="r-tamanho"></dd></div>
+                        <div class="linha"><dt>1ª camada</dt><dd id="r-recheio1"></dd></div>
+                        <div class="linha"><dt>2ª camada</dt><dd id="r-recheio2"></dd></div>
+                        <div class="linha"><dt>Decoração</dt><dd id="r-decoracao"></dd></div>
+                        <div class="linha"><dt>Valor estimado</dt><dd id="r-valor" class="destaque"></dd></div>
+                    </dl>
+                </div>
+
+                <div class="campo-isca" aria-hidden="true">
+                    <label for="campo-extra">Deixe este campo em branco</label>
+                    <input type="text" id="campo-extra" name="campo_extra" tabindex="-1" autocomplete="off" />
+                </div>
+
+                <button type="button" class="botao botao-rosa botao-total" id="btn-enviar">Enviar solicitação <svg class="ic" aria-hidden="true"><use href="#i-send"/></svg></button>
+                <div class="erro-envio" id="erro-envio" role="alert" hidden>
+                    <p id="erro-envio-texto"></p>
+                    <a href="https://wa.me/5519994870852" class="botao botao-whats botao-total" target="_blank" rel="noopener">Chamar a Fátima no WhatsApp <svg class="ic ic-fill" aria-hidden="true"><use href="#i-whatsapp"/></svg></a>
+                </div>
+            </div>
+        </section>
+
+        <!-- SOBRE -->
+        <section class="sobre animar" id="sobre">
+            <h2 class="secao-titulo">Sobre a Fátima</h2>
+            <p class="secao-subtitulo">A história por trás de cada bolo</p>
+
+            <div class="sobre-conteudo">
+                <div class="sobre-foto">
+                    <img src="img/fatima.jpg" alt="Fátima, confeiteira da Confeitaria" loading="lazy" />
+                </div>
+                <div class="sobre-texto-box">
+                    <p class="sobre-texto">
+                        Há anos transformando ingredientes simples em momentos inesquecíveis,
+                        Fátima coloca carinho e dedicação em cada bolo que sai da sua confeitaria.
+                        Cada encomenda é feita à mão, com atenção aos detalhes e respeito ao
+                        gosto do cliente.
+                    </p>
+                    <ul class="sobre-diferenciais">
+                        <li><span class="icone-caixa"><svg class="ic" aria-hidden="true"><use href="#i-sparkles"/></svg></span>Receitas artesanais e exclusivas</li>
+                        <li><span class="icone-caixa"><svg class="ic" aria-hidden="true"><use href="#i-leaf"/></svg></span>Ingredientes selecionados</li>
+                        <li><span class="icone-caixa"><svg class="ic" aria-hidden="true"><use href="#i-heart"/></svg></span>Atendimento personalizado</li>
+                        <li><span class="icone-caixa"><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg></span>Pontualidade na entrega</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
     </main>
 
-  </div>
-
-  <script>
-
-    // =====================
-    // CONFIGURAÇÕES
-    // =====================
-    const URL_PLANILHA = 'https://script.google.com/macros/s/AKfycbydy8rZFfhOJvWK3WBv8YDpAUr9hgkz_0uEy-d6M4p9zXqY5nViLQRX6cF8EUUMvl_4XQ/exec';
-    const GOOGLE_CLIENT_ID ='SEU_CLIENT_ID_AQUI.apps.gooogleusercontent.com';
-
-
-    // =====================
-    // SESSÃO
-    // O Apps Script devolve um código temporário no login. Ele fica só na memória
-    // desta página (ao recarregar, é preciso entrar de novo) e vai em toda ação.
-    // =====================
-    let sessao = null;
-
-    function encerrarSessao(mensagem) {
-      sessao = null;
-      document.getElementById('painel').style.display = 'none';
-      document.getElementById('tela-login').style.display = 'block';
-      if (mensagem) {
-        const erro = document.getElementById('login-erro');
-        erro.textContent = mensagem;
-        erro.style.display = 'block';
-      }
-    }
-
-    async function chamarScript(corpo) {
-      const resposta = await fetch(URL_PLANILHA, {
-        method: 'POST',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify(Object.assign({}, corpo, { sessao: sessao }))
-      });
-      const resultado = await resposta.json();
-
-      if (resultado.erro === 'nao_autorizado') {
-        encerrarSessao('Sua sessão expirou. Entre novamente.');
-        throw new Error('nao_autorizado');
-      }
-      return resultado;
-    }
-
-    // =====================
-    // LOGIN COM GOOGLE
-    // =====================
-    window.onload = function () {
-      google.accounts.id.initialize({
-    client_id: '814272667016-c84m7qhs6dqjshkh17b590chnsorso6a.apps.googleusercontent.com',
-    callback: aoLogar
-});
-        
-      google.accounts.id.renderButton(
-        document.getElementById('google-btn-container'),
-        { theme: 'outline', size: 'large', text: 'signin_with' }
-      );
-    };
-
-    async function aoLogar(resposta) {
-      const erro = document.getElementById('login-erro');
-      erro.textContent = 'Acesso não autorizado para essa conta.';
-      erro.style.display = 'none';
-
-      // envia o token pro Apps Script verificar se o e-mail é autorizado
-     const verificacao = await fetch(URL_PLANILHA, {
-    method: 'POST',
-    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-    body: JSON.stringify({ acao: 'verificarLogin', token: resposta.credential })
-});
-
-      const resultado = await verificacao.json();
-
-     if (resultado.autorizado) {
-        sessao = resultado.sessao;
-        document.getElementById('tela-login').style.display = 'none';
-        document.getElementById('painel').style.display = 'block';
-        carregarPedidos();
-      } else {
-        erro.style.display = 'block';
-    }
-  }
-    // =====================
-    // LOGIN COM E-MAIL E SENHA
-    // A conferência da senha é feita no Apps Script (ação "verificarSenha").
-    // =====================
-    function mostrarErroLogin(texto) {
-      const erro = document.getElementById('login-erro');
-      erro.textContent = texto;
-      erro.style.display = 'block';
-    }
-
-    document.getElementById('btn-mostrar-senha').addEventListener('click', function () {
-      const campo = document.getElementById('login-senha');
-      const mostrar = campo.type === 'password';
-      campo.type = mostrar ? 'text' : 'password';
-      this.textContent = mostrar ? 'Ocultar' : 'Mostrar';
-      this.setAttribute('aria-label', mostrar ? 'Ocultar senha' : 'Mostrar senha');
-    });
-
-    document.getElementById('form-login').addEventListener('submit', async function (e) {
-      e.preventDefault();
-      const email = document.getElementById('login-email').value.trim();
-      const senha = document.getElementById('login-senha').value;
-      const botao = document.getElementById('btn-login');
-      document.getElementById('login-erro').style.display = 'none';
-
-      if (!email || !senha) {
-        mostrarErroLogin('Preencha o e-mail e a senha.');
-        return;
-      }
-
-      botao.disabled = true;
-      botao.textContent = 'Entrando...';
-      try {
-        const verificacao = await fetch(URL_PLANILHA, {
-          method: 'POST',
-          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-          body: JSON.stringify({ acao: 'verificarSenha', email: email, senha: senha })
-        });
-        const resultado = await verificacao.json();
-
-        if (resultado.autorizado) {
-          sessao = resultado.sessao;
-          document.getElementById('login-senha').value = '';
-          document.getElementById('tela-login').style.display = 'none';
-          document.getElementById('painel').style.display = 'block';
-          carregarPedidos();
-        } else if (resultado.bloqueado) {
-          mostrarErroLogin('Muitas tentativas. Tente novamente em 15 minutos.');
-        } else {
-          mostrarErroLogin('E-mail ou senha incorretos.');
-        }
-      } catch (erro) {
-        mostrarErroLogin('Não foi possível entrar agora. Tente novamente.');
-      } finally {
-        botao.disabled = false;
-        botao.textContent = 'Entrar';
-      }
-    });
-
-    // botão sair
-    document.getElementById('btn-sair').addEventListener('click', function () {
-      chamarScript({ acao: 'sair' }).catch(function () {});
-      encerrarSessao();
-      document.getElementById('login-erro').style.display = 'none';
-      google.accounts.id.disableAutoSelect();
-    });
-
-    // =====================
-    // CARREGAR PEDIDOS
-    // =====================
-    async function carregarPedidos() {
-      const lista = document.getElementById('lista-pedidos');
-      lista.innerHTML = '<p class="carregando">Carregando pedidos...</p>';
-
-      try {
-        const dados = await chamarScript({ acao: 'listar' });
-
-        if (!dados.pedidos || dados.pedidos.length === 0) {
-          lista.innerHTML = '<p class="carregando">Nenhum pedido encontrado.</p>';
-          return;
-        }
-
-        lista.innerHTML = '';
-        dados.pedidos.reverse().forEach(function (pedido) {
-          lista.innerHTML += criarCardPedido(pedido);
-        });
-
-      } catch (erro) {
-        if (erro.message === 'nao_autorizado') return;
-        console.log('Erro:', erro);
-        lista.innerHTML = '<p class="carregando">Erro ao carregar pedidos. Tente novamente.</p>';
-      }
-    }
-
-    // =====================
-    // SEGURANÇA: os dados vêm do formulário público, então são "escapados"
-    // antes de entrar no HTML do painel.
-    // =====================
-    function esc(valor) {
-      return String(valor === undefined || valor === null ? '' : valor)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#39;');
-    }
-
-    // texto do tamanho do bolo (pedidos novos guardam o valor inicial da faixa)
-    const TAMANHOS = {
-      '8': '8 a 10 pessoas', '10': '10 a 15 pessoas', '15': '15 a 20 pessoas',
-      '25': '25 a 30 pessoas', '40': '40 a 50 pessoas', '50': '50 a 60 pessoas',
-      '60+': 'Mais de 60 pessoas'
-    };
-
-    function textoTamanho(p) {
-      const valor = String(p.porcoes).trim();
-      if (valor === '60+') return TAMANHOS['60+'];
-      // pedidos novos têm valor estimado; os antigos continuam como "fatias"
-      if (p.valorEstimado && TAMANHOS[valor]) return TAMANHOS[valor];
-      return valor + ' fatias';
-    }
-
-    // foto de referência: usa só o código do arquivo do Drive, nunca o link bruto
-    function blocoFoto(p) {
-      const achou = String(p.fotoLink || '').match(/^https:\/\/drive\.google\.com\/file\/d\/([A-Za-z0-9_-]+)/);
-      if (!achou) return '';
-      const id = achou[1];
-      const abrir = 'https://drive.google.com/file/d/' + id + '/view';
-      const miniatura = 'https://drive.google.com/thumbnail?id=' + id + '&sz=w600';
-      return `
-      <div class="pedido-foto">
-        <p class="pedido-detalhe-label">Foto de referência</p>
-        <a href="${abrir}" target="_blank" rel="noopener noreferrer">
-          <img src="${miniatura}" alt="Foto de referência do pedido" loading="lazy" referrerpolicy="no-referrer"
-               onerror="if (!this.dataset.tentou) { this.dataset.tentou = '1'; this.src = 'https://lh3.googleusercontent.com/d/${id}=w600'; } else { this.replaceWith(document.createTextNode('Abrir foto')); }">
-        </a>
-      </div>`;
-    }
-
-    // =====================
-    // CRIAR CARD DO PEDIDO
-    // =====================
-    function criarCardPedido(p) {
-
-      // formata as datas
-      const dataEvento = p.dataEvento ? String(p.dataEvento).split('T')[0].split('-').reverse().join('/') : 'Não informado';
-      const dataRecebido = p.data ? String(p.data).substring(0, 16).replace('T', ' ').split('-').join('/').replace(/(\d{4})\/(\d{2})\/(\d{2})/, '$3/$2/$1') : '';
-
-      const statusClasse = p.status === 'Novo' ? 'status-novo' :
-        p.status === 'Confirmado' ? 'status-confirmado' : 'status-concluido';
-
-      const botoes = p.status === 'Novo'
-        ? `<button class="btn-confirmar" onclick="atualizarStatus(${p.linha}, 'Confirmado')">✓ Confirmar</button>
-       <button class="btn-concluir" onclick="atualizarStatus(${p.linha}, 'Concluído')">✔ Concluído</button>`
-        : p.status === 'Confirmado'
-          ? `<button class="btn-concluir" onclick="atualizarStatus(${p.linha}, 'Concluído')">✔ Marcar Concluído</button>`
-         : `<button class="btn-arquivar" onclick="arquivarPedido(this, ${p.linha})">✕ Remover da lista</button>`;
-
-      return `
-    <div class="pedido-card">
-      <div class="pedido-card-topo">
-        <div>
-          <p class="pedido-nome">${esc(p.nome)}</p>
-          <p class="pedido-whatsapp">💬 ${esc(p.whatsapp)}</p>
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-logo">
+            <span class="logo-marca"><svg class="ic" aria-hidden="true"><use href="#i-cake"/></svg></span>
+            <span>Confeitaria Fátima</span>
         </div>
-        <span class="pedido-status ${statusClasse}">${esc(p.status)}</span>
-      </div>
+        <p class="frase-efeito">Doçura e Tradição</p>
 
-      <div class="pedido-detalhes">
-        <div class="pedido-detalhe">
-          <p class="pedido-detalhe-label">Data do Evento</p>
-          <p class="pedido-detalhe-valor">📅 ${esc(dataEvento)}</p>
-        </div>
-        <div class="pedido-detalhe">
-          <p class="pedido-detalhe-label">Porções</p>
-          <p class="pedido-detalhe-valor">🎂 ${esc(textoTamanho(p))}</p>
-        </div>
-        <div class="pedido-detalhe">
-          <p class="pedido-detalhe-label">Massa</p>
-          <p class="pedido-detalhe-valor">${esc(p.massa)}</p>
-        </div>
-        <div class="pedido-detalhe">
-          <p class="pedido-detalhe-label">Recheio 1ª Camada</p>
-          <p class="pedido-detalhe-valor">${esc(p.recheio1)}</p>
-        </div>
-        <div class="pedido-detalhe">
-          <p class="pedido-detalhe-label">Recheio 2ª Camada</p>
-          <p class="pedido-detalhe-valor">${esc(p.recheio2)}</p>
-        </div>
-        ${p.decoracao ? `<div class="pedido-detalhe">
-          <p class="pedido-detalhe-label">Decoração</p>
-          <p class="pedido-detalhe-valor">${esc(p.decoracao)}</p>
-        </div>` : ''}
-        ${p.valorEstimado ? `<div class="pedido-detalhe">
-          <p class="pedido-detalhe-label">Valor estimado</p>
-          <p class="pedido-detalhe-valor">${esc(p.valorEstimado)}</p>
-        </div>` : ''}
-        <div class="pedido-detalhe">
-          <p class="pedido-detalhe-label">Recebido em</p>
-          <p class="pedido-detalhe-valor">${esc(dataRecebido)}</p>
-        </div>
-      </div>
+        <ul class="footer-contatos">
+            <li><a href="https://instagram.com/fatimabolos53" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-instagram"/></svg>@fatimabolos53</a></li>
+            <li><a href="https://wa.me/5519994870852" target="_blank" rel="noopener"><svg class="ic ic-fill" aria-hidden="true"><use href="#i-whatsapp"/></svg>(19) 99487-0852</a></li>
+            <li><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>Seg a Sex, 8h às 18h</li>
+        </ul>
 
-      ${p.mensagem ? `<div class="pedido-mensagem">"${esc(p.mensagem)}"</div>` : ''}
-      ${blocoFoto(p)}
+        <p class="footer-copy">© <span id="ano-atual"></span> Confeitaria Fátima Bolos — Doçura e Tradição</p>
+    </footer>
 
-      <div class="pedido-acoes">
-        ${botoes}
-      </div>
+    <!-- MENU MOBILE (barra inferior) -->
+    <nav class="bottom-nav" aria-label="Navegação">
+        <a href="#inicio" class="nav-item ativo" data-sec="inicio"><span class="nav-pill"><svg class="ic" aria-hidden="true"><use href="#i-home"/></svg></span>Início</a>
+        <a href="#massas" class="nav-item" data-sec="massas"><span class="nav-pill"><svg class="ic" aria-hidden="true"><use href="#i-cake"/></svg></span>Doces</a>
+        <a href="#pedido" class="nav-item" data-sec="pedido"><span class="nav-pill"><svg class="ic" aria-hidden="true"><use href="#i-calendar"/></svg></span>Agenda</a>
+        <a href="admin/painel.html" class="nav-item"><span class="nav-pill"><svg class="ic" aria-hidden="true"><use href="#i-sliders"/></svg></span>Admin</a>
+    </nav>
+
+    <!-- MENU LATERAL (hambúrguer) -->
+    <div id="menu-overlay"></div>
+    <nav id="menu-conteudo" aria-label="Menu">
+        <div class="menu-topo">
+            <span>Confeitaria Fátima Bolos</span>
+            <button type="button" class="icon-btn" id="menu-fechar" aria-label="Fechar menu"><svg class="ic" aria-hidden="true"><use href="#i-x"/></svg></button>
+        </div>
+        <a href="#inicio"><svg class="ic" aria-hidden="true"><use href="#i-home"/></svg>Início</a>
+        <a href="#massas"><svg class="ic" aria-hidden="true"><use href="#i-cake"/></svg>Monte seu Bolo</a>
+        <a href="#pedido"><svg class="ic" aria-hidden="true"><use href="#i-calendar"/></svg>Agende</a>
+        <a href="#sobre"><svg class="ic" aria-hidden="true"><use href="#i-heart"/></svg>Sobre</a>
+        <a href="https://instagram.com/fatimabolos53" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-instagram"/></svg>Instagram</a>
+        <a href="https://wa.me/5519994870852" target="_blank" rel="noopener"><svg class="ic ic-fill" aria-hidden="true"><use href="#i-whatsapp"/></svg>WhatsApp</a>
+        <a href="admin/painel.html"><svg class="ic" aria-hidden="true"><use href="#i-sliders"/></svg>Admin</a>
+    </nav>
+
+    <!-- TELA DE CONFIRMAÇÃO -->
+    <div id="tela-confirmacao" style="display:none" role="dialog" aria-modal="true" aria-labelledby="confirmacao-titulo">
+        <div class="confirmacao-caixa">
+            <span class="confirmacao-icone"><svg class="ic" aria-hidden="true"><use href="#i-cake"/></svg></span>
+            <h2 class="confirmacao-titulo" id="confirmacao-titulo">Pedido Enviado!</h2>
+            <p class="confirmacao-texto">Obrigada pelo seu pedido! Em breve a Fátima entrará em contato para confirmar os detalhes.</p>
+            <div class="confirmacao-resumo" id="confirmacao-resumo"></div>
+            <a href="#" class="botao botao-whats botao-total" id="btn-whatsapp-pedido" target="_blank" rel="noopener">Abrir WhatsApp com meu pedido <svg class="ic ic-fill" aria-hidden="true"><use href="#i-whatsapp"/></svg></a>
+            <button type="button" class="botao botao-primario botao-total" id="btn-novo-pedido">Fazer outro pedido</button>
+        </div>
     </div>
-  `;
-    }
 
-    // =====================
-    // ATUALIZAR STATUS
-    // =====================
-    async function atualizarStatus(linha, novoStatus) {
-      try {
-        const resultado = await chamarScript({ acao: 'atualizarStatus', linha: linha, status: novoStatus });
-        if (resultado.status !== 'ok') throw new Error(resultado.erro || 'erro');
+    <!-- BOTÃO WHATSAPP -->
+    <a href="https://wa.me/5519994870852" target="_blank" rel="noopener" class="whatsapp-btn" title="Fale conosco no WhatsApp" aria-label="Fale conosco no WhatsApp"><svg class="ic ic-fill" aria-hidden="true"><use href="#i-whatsapp"/></svg></a>
 
-        carregarPedidos();
-      } catch (erro) {
-        if (erro.message === 'nao_autorizado') return;
-        alert('Erro ao atualizar. Tente novamente.');
-      }
-    }
+    <script>
+        'use strict';
 
-    async function arquivarPedido(btn, linha) {
-      if (!confirm('Remove este pedido da planilha tambem?')) return;
+        // =====================
+        // DADOS
+        // =====================
+        const URL_PLANILHA = 'https://script.google.com/macros/s/AKfycbydy8rZFfhOJvWK3WBv8YDpAUr9hgkz_0uEy-d6M4p9zXqY5nViLQRX6cF8EUUMvl_4XQ/exec';
+        const WHATSAPP_FATIMA = '5519994870852';
+        const paginaCarregadaEm = Date.now(); // usado para detectar robôs (preenchem rápido demais)
 
-      const card = btn.closest('.pedido-card');
-      card.style.transition = 'opacity 0.4s';
-      card.style.opacity = '0.4';
+        const PRECOS = { 8: 120, 10: 145, 15: 160, 25: 210, 40: 300, 50: 380 };
+        const TEXTO_PORCOES = {
+            8: '8 a 10 pessoas', 10: '10 a 15 pessoas', 15: '15 a 20 pessoas',
+            25: '25 a 30 pessoas', 40: '40 a 50 pessoas', 50: '50 a 60 pessoas',
+            '60+': 'Mais de 60 pessoas'
+        };
+        const PRECO_RECHEIO_ESPECIAL = 20;
 
-      try {
-        const resultado = await chamarScript({ acao: 'deletarLinha', linha: linha });
-        if (resultado.status !== 'ok') throw new Error(resultado.erro || 'erro');
+        // Mostra o botão "Anexar foto" (o Apps Script salva a foto no Google Drive).
+        // Troque para false para esconder a opção do site.
+        const FOTO_ATIVA = true;
+        // Mostra, na tela de confirmação, uma linha com o que o Apps Script respondeu
+        // sobre a foto. Serve para descobrir problemas; depois que funcionar, troque para false.
+        const DEBUG_FOTO = false;
+        const FOTO_LADO_MAXIMO = 1280;     // a foto é reduzida para no máximo 1280 px
+        const FOTO_QUALIDADE = 0.8;        // qualidade do JPEG (0 a 1)
+        const FOTO_TAMANHO_ORIGINAL_MAX = 25 * 1024 * 1024; // recusa arquivos acima de 25 MB
 
-        // recarrega a lista: depois de apagar, os demais pedidos mudam de linha na planilha
-        carregarPedidos();
-      } catch (erro) {
-        card.style.opacity = '1';
-        if (erro.message === 'nao_autorizado') return;
-        alert('Não foi possível remover o pedido. Tente novamente.');
-      }
-    }
+        // =====================
+        // ATALHOS
+        // =====================
+        const $ = (seletor, raiz = document) => raiz.querySelector(seletor);
+        const $$ = (seletor, raiz = document) => Array.from(raiz.querySelectorAll(seletor));
+        const marcado = (nome) => $('input[name="' + nome + '"]:checked');
+        const reais = (valor) => 'R$ ' + valor.toFixed(2).replace('.', ',');
 
-  </script>
+        // recheio especial = pílula com a classe "especial"
+        function recheioEhEspecial(nomeCampo) {
+            const el = marcado(nomeCampo);
+            const pilula = el ? el.closest('.pill') : null;
+            return !!(pilula && pilula.classList.contains('especial'));
+        }
+
+        // =====================
+        // LEITURA DO PEDIDO E CÁLCULO DO VALOR
+        // =====================
+        function lerPedido() {
+            const massa = marcado('massa') ? marcado('massa').value : '';
+            const recheio1 = marcado('recheio1') ? marcado('recheio1').value : '';
+            const recheio2 = marcado('recheio2') ? marcado('recheio2').value : '';
+            const porcoes = marcado('porcoes') ? marcado('porcoes').value : '8';
+            const decEl = marcado('decoracao');
+            const decoracao = decEl ? decEl.dataset.nome : 'Simples';
+            const acrescimoDecoracao = decEl ? parseInt(decEl.value, 10) : 0;
+            const qtdEspeciais = (recheioEhEspecial('recheio1') ? 1 : 0) + (recheioEhEspecial('recheio2') ? 1 : 0);
+            const consulta = porcoes === '60+';
+            const total = consulta ? null : (PRECOS[porcoes] || 120) + acrescimoDecoracao + qtdEspeciais * PRECO_RECHEIO_ESPECIAL;
+
+            return {
+                massa, recheio1, recheio2, porcoes, decoracao, total, consulta,
+                tamanho: TEXTO_PORCOES[porcoes] || '',
+                valor: consulta ? 'Sob consulta' : reais(total)
+            };
+        }
+
+        // mensagem para bolos acima de 60 pessoas (valor combinado pelo WhatsApp)
+        function mensagemConsulta(p) {
+            return [
+                'Olá Fátima! Gostaria de um orçamento para um bolo para mais de 60 pessoas 🎂',
+                '',
+                '*Massa:* ' + p.massa,
+                '*Recheio 1ª Camada:* ' + p.recheio1,
+                '*Recheio 2ª Camada:* ' + p.recheio2,
+                '*Decoração:* ' + p.decoracao,
+                '',
+                'Pode me ajudar?'
+            ].join('\n');
+        }
+
+        function atualizarPedido() {
+            const p = lerPedido();
+
+            // recheio escolhido aparece no cabeçalho de cada camada
+            $('#escolha1').textContent = p.recheio1;
+            $('#escolha2').textContent = p.recheio2;
+
+            // aviso de acréscimo nos recheios especiais
+            $('#aviso1').hidden = !recheioEhEspecial('recheio1');
+            $('#aviso2').hidden = !recheioEhEspecial('recheio2');
+
+            // resumo e valor logo abaixo das escolhas
+            $('#resumo-texto').textContent =
+                p.massa + ' · ' + p.tamanho + ' · ' + p.recheio1 + ' + ' + p.recheio2 + ' · ' + p.decoracao;
+            $('#orcamento-valor').textContent = p.valor;
+            $('#orcamento-valor').classList.toggle('consulta', p.consulta);
+
+            // acima de 60 pessoas: valor combinado pelo WhatsApp
+            $('#aviso-consulta').hidden = !p.consulta;
+            $('#cta-whats').hidden = !p.consulta;
+            $('#cta-whats').href = 'https://wa.me/' + WHATSAPP_FATIMA + '?text=' + encodeURIComponent(mensagemConsulta(p));
+            $('#cta-continuar').classList.toggle('botao-primario', !p.consulta);
+            $('#cta-continuar').classList.toggle('botao-contorno', p.consulta);
+
+            // resumo do pedido no formulário
+            $('#r-massa').textContent = p.massa;
+            $('#r-tamanho').textContent = p.tamanho;
+            $('#r-recheio1').textContent = p.recheio1;
+            $('#r-recheio2').textContent = p.recheio2;
+            $('#r-decoracao').textContent = p.decoracao;
+            $('#r-valor').textContent = p.valor;
+        }
+
+        // qualquer mudança de seleção atualiza tudo
+        document.addEventListener('change', function (e) {
+            if (e.target.matches('input[type="radio"]')) {
+                atualizarPedido();
+            }
+        });
+
+        // =====================
+        // PROGRESSO DAS ETAPAS (1 a 4)
+        // =====================
+        const ORDEM_PASSOS = ['passo-massa', 'passo-tamanho', 'passo-recheios', 'passo-decoracao'];
+        const passoFeito = {};
+        const recheioEscolhido = { recheio1: false, recheio2: false };
+        const reduzirMovimento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        function rolarPara(el, bloco) {
+            el.scrollIntoView({ behavior: reduzirMovimento ? 'auto' : 'smooth', block: bloco || 'start' });
+        }
+
+        function definirEtapaAtiva(id) {
+            $$('.etapa').forEach(function (etapa) {
+                const ativa = etapa.dataset.passo === id;
+                etapa.classList.toggle('ativa', ativa);
+                if (ativa) {
+                    etapa.setAttribute('aria-current', 'step');
+                } else {
+                    etapa.removeAttribute('aria-current');
+                }
+            });
+        }
+
+        function marcarPasso(id) {
+            passoFeito[id] = true;
+            $('.etapa[data-passo="' + id + '"]').classList.add('feita');
+            document.getElementById(id).classList.add('feito');
+        }
+
+        function abrirCamada(id, abrir) {
+            const camada = document.getElementById(id);
+            camada.classList.toggle('aberta', abrir);
+            $('.camada-cab', camada).setAttribute('aria-expanded', String(abrir));
+        }
+
+        function irParaProximoPasso(id) {
+            const proximo = ORDEM_PASSOS[ORDEM_PASSOS.indexOf(id) + 1];
+            setTimeout(function () {
+                if (proximo) {
+                    definirEtapaAtiva(proximo);
+                    rolarPara(document.getElementById(proximo));
+                } else {
+                    rolarPara($('#resumo'), 'center');
+                }
+            }, 350);
+        }
+
+        // usa "click" (e não "change") para valer também quando a pessoa
+        // toca na opção que já vem marcada
+        document.addEventListener('click', function (e) {
+            if (!e.target.matches('input[type="radio"]')) return;
+            const passo = e.target.closest('.passo');
+            if (!passo) return;
+            const id = passo.id;
+
+            if (id === 'passo-recheios') {
+                const nome = e.target.name;
+                const primeiraVez = !recheioEscolhido[nome];
+                recheioEscolhido[nome] = true;
+
+                if (recheioEscolhido.recheio1 && recheioEscolhido.recheio2) {
+                    if (!passoFeito[id]) {
+                        marcarPasso(id);
+                        irParaProximoPasso(id);
+                    }
+                } else if (nome === 'recheio1' && primeiraVez) {
+                    // escolheu a 1ª camada: recolhe e abre a 2ª
+                    setTimeout(function () {
+                        abrirCamada('camada1', false);
+                        abrirCamada('camada2', true);
+                        rolarPara(document.getElementById('camada2'));
+                    }, 350);
+                }
+                return;
+            }
+
+            const primeiraVez = !passoFeito[id];
+            marcarPasso(id);
+            if (primeiraVez) {
+                irParaProximoPasso(id);
+            }
+        });
+
+        // =====================
+        // RECHEIOS: abrir/fechar camada e "+ opções"
+        // =====================
+        $$('.camada-cab').forEach(function (botao) {
+            botao.addEventListener('click', function () {
+                const camada = botao.closest('.camada');
+                const aberta = camada.classList.toggle('aberta');
+                botao.setAttribute('aria-expanded', String(aberta));
+            });
+        });
+
+        $$('[data-mais]').forEach(function (botao) {
+            const extras = botao.closest('.camada-corpo').querySelectorAll('.pill.extra').length;
+            botao.addEventListener('click', function () {
+                const corpo = botao.closest('.camada-corpo');
+                const mostrando = corpo.classList.toggle('mais');
+                botao.textContent = mostrando ? 'Mostrar menos' : '+' + extras + ' opções';
+            });
+        });
+
+        // =====================
+        // TEXTO DIGITADO DO HERO
+        // =====================
+        (function () {
+            const el = $('#hero-typed');
+            const frase = 'Arte em Confeitaria';
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                el.textContent = frase;
+                return;
+            }
+            let indice = 0;
+            function digitar() {
+                el.textContent = frase.slice(0, indice);
+                if (indice < frase.length) {
+                    indice++;
+                    setTimeout(digitar, 90);
+                }
+            }
+            digitar();
+        })();
+
+        // =====================
+        // DATA: bloqueia datas passadas
+        // =====================
+        (function () {
+            const hoje = new Date();
+            const ano = hoje.getFullYear();
+            const mes = String(hoje.getMonth() + 1).padStart(2, '0');
+            const dia = String(hoje.getDate()).padStart(2, '0');
+            $('#data').min = ano + '-' + mes + '-' + dia;
+        })();
+
+        // =====================
+        // MENSAGEM: expande suavemente ao escrever
+        // =====================
+        const campoMensagem = $('#campo-mensagem');
+        const caixaMensagem = $('#mensagem');
+
+        caixaMensagem.addEventListener('focus', function () {
+            campoMensagem.classList.add('expandido');
+        });
+        caixaMensagem.addEventListener('blur', function () {
+            // só recolhe se estiver vazio; com texto, continua aberto
+            if (!caixaMensagem.value.trim()) {
+                campoMensagem.classList.remove('expandido');
+            }
+        });
+        campoMensagem.addEventListener('click', function () {
+            caixaMensagem.focus();
+        });
+
+        // =====================
+        // FOTO DE REFERÊNCIA (opcional)
+        // A foto é reduzida aqui no navegador antes de ser enviada.
+        // =====================
+        let fotoAnexada = null; // { dataUrl, nome }
+
+        function mostrarErroFoto(texto) {
+            const erro = $('#foto-erro');
+            erro.textContent = texto;
+            erro.hidden = !texto;
+        }
+
+        function removerFoto() {
+            fotoAnexada = null;
+            $('#foto').value = '';
+            $('#anexo-previa').hidden = true;
+            $('#btn-foto').hidden = false;
+            mostrarErroFoto('');
+        }
+
+        function reduzirImagem(arquivo) {
+            return new Promise(function (resolve, reject) {
+                const endereco = URL.createObjectURL(arquivo);
+                const img = new Image();
+                img.onload = function () {
+                    const escala = Math.min(1, FOTO_LADO_MAXIMO / Math.max(img.naturalWidth, img.naturalHeight));
+                    const canvas = document.createElement('canvas');
+                    canvas.width = Math.max(1, Math.round(img.naturalWidth * escala));
+                    canvas.height = Math.max(1, Math.round(img.naturalHeight * escala));
+                    const ctx = canvas.getContext('2d');
+                    ctx.fillStyle = '#ffffff'; // fundo branco para PNG com transparência
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    URL.revokeObjectURL(endereco);
+                    resolve(canvas.toDataURL('image/jpeg', FOTO_QUALIDADE));
+                };
+                img.onerror = function () {
+                    URL.revokeObjectURL(endereco);
+                    reject(new Error('imagem ilegível'));
+                };
+                img.src = endereco;
+            });
+        }
+
+        if (!FOTO_ATIVA) {
+            $('#anexo').hidden = true;
+        }
+
+        $('#btn-foto').addEventListener('click', function () {
+            $('#foto').click();
+        });
+        $('#btn-remover-foto').addEventListener('click', removerFoto);
+
+        $('#foto').addEventListener('change', async function () {
+            const arquivo = this.files && this.files[0];
+            if (!arquivo) return;
+            mostrarErroFoto('');
+
+            if (arquivo.type && !arquivo.type.startsWith('image/')) {
+                removerFoto();
+                mostrarErroFoto('Escolha um arquivo de imagem (JPG, PNG ou similar).');
+                return;
+            }
+            if (arquivo.size > FOTO_TAMANHO_ORIGINAL_MAX) {
+                removerFoto();
+                mostrarErroFoto('Essa foto é muito grande. Escolha uma com menos de 25 MB.');
+                return;
+            }
+
+            try {
+                const dataUrl = await reduzirImagem(arquivo);
+                const nomeBase = (arquivo.name || 'foto').replace(/\.[^.]+$/, '');
+                fotoAnexada = { dataUrl: dataUrl, nome: nomeBase + '.jpg' };
+
+                $('#foto-previa').src = dataUrl;
+                $('#foto-nome').textContent = arquivo.name || 'foto.jpg';
+                $('#foto-tamanho').textContent = 'Reduzida para ' + Math.max(1, Math.round(dataUrl.length * 0.75 / 1024)) + ' KB';
+                $('#anexo-previa').hidden = false;
+                $('#btn-foto').hidden = true;
+            } catch (erro) {
+                removerFoto();
+                mostrarErroFoto('Não consegui abrir essa foto. Tente uma imagem em JPG ou PNG.');
+            }
+        });
+
+        // =====================
+        // ENVIO DO PEDIDO
+        // =====================
+        function linhaConfirmacao(rotulo, valor) {
+            const linha = document.createElement('div');
+            linha.className = 'conf-linha';
+            const r = document.createElement('span');
+            r.textContent = rotulo;
+            const v = document.createElement('strong');
+            v.textContent = valor;
+            linha.appendChild(r);
+            linha.appendChild(v);
+            return linha;
+        }
+
+        // mostra a caixa de erro do envio, com o botão para chamar a Fátima
+        function mostrarErroEnvio(retorno) {
+            const nomesCampos = { nome: 'nome', whatsapp: 'WhatsApp', dataEvento: 'data do evento', mensagem: 'mensagem' };
+            let texto = 'Não conseguimos confirmar o envio do seu pedido. Antes de tentar de novo, chame a Fátima no WhatsApp para conferir se ele chegou.';
+            if (retorno && retorno.erro === 'limite') {
+                texto = 'Recebemos muitos pedidos em pouco tempo. Aguarde alguns minutos e tente de novo, ou fale direto com a Fátima.';
+            } else if (retorno && retorno.erro === 'dados_invalidos') {
+                texto = 'Confira o campo "' + (nomesCampos[retorno.campo] || retorno.campo) + '" e tente enviar novamente.';
+            } else if (retorno && retorno.erro === 'ocupado') {
+                texto = 'O sistema está ocupado agora. Tente novamente em instantes.';
+            }
+            $('#erro-envio-texto').textContent = texto;
+            $('#erro-envio').hidden = false;
+            $('#erro-envio').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        $('#btn-enviar').addEventListener('click', async function () {
+            const btn = $('#btn-enviar');
+            const nome = $('#nome').value.trim();
+            const whatsapp = $('#whatsapp').value.trim();
+            const dataEvento = $('#data').value;
+            const mensagem = $('#mensagem').value.trim();
+            const p = lerPedido();
+            $('#erro-envio').hidden = true;
+
+            // campos obrigatórios
+            if (!nome || !whatsapp || !dataEvento) {
+                alert('Por favor preencha todos os campos obrigatórios!');
+                return;
+            }
+
+            // WhatsApp com DDD (10 a 13 números, contando o código do país)
+            const digitosWhats = whatsapp.replace(/\D/g, '');
+            if (digitosWhats.length < 10 || digitosWhats.length > 13) {
+                alert('Informe um WhatsApp válido, com DDD. Exemplo: (19) 99999-9999');
+                return;
+            }
+
+            // a data precisa ser futura
+            const dataSelecionada = new Date(dataEvento + 'T00:00:00');
+            const hoje = new Date();
+            hoje.setHours(0, 0, 0, 0);
+            if (dataSelecionada < hoje) {
+                alert('Por favor escolha uma data futura para o evento!');
+                return;
+            }
+
+            // indica o envio
+            const textoOriginal = btn.innerHTML;
+            btn.textContent = 'Enviando...';
+            btn.disabled = true;
+
+            try {
+                // dados do pedido
+                const dados = {
+                    nome: nome,
+                    whatsapp: whatsapp,
+                    massa: p.massa,
+                    recheio1: p.recheio1,
+                    recheio2: p.recheio2,
+                    dataEvento: dataEvento,
+                    porcoes: p.porcoes,
+                    decoracao: p.decoracao,
+                    valorEstimado: p.valor,
+                    mensagem: mensagem,
+                    website: $('#campo-extra').value,
+                    tempoPreenchimento: Date.now() - paginaCarregadaEm
+                };
+                // foto de referência (só vai se a pessoa anexou uma)
+                if (FOTO_ATIVA && fotoAnexada) {
+                    dados.foto = fotoAnexada.dataUrl.split(',')[1]; // JPEG em base64
+                    dados.fotoNome = fotoAnexada.nome;
+                }
+
+                // envia os dados para o Google Sheets
+                const enviado = await fetch(URL_PLANILHA, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify(dados)
+                });
+
+                // o Apps Script devolve o link da foto salva no Drive (se houve foto)
+                const enviouFoto = !!(FOTO_ATIVA && fotoAnexada);
+                let retorno = null;
+                try {
+                    retorno = await enviado.json();
+                } catch (e) { retorno = null; }
+
+                // só mostra "Pedido Enviado!" quando o script confirma que gravou
+                if (!retorno || retorno.status !== 'ok') {
+                    mostrarErroEnvio(retorno);
+                    btn.innerHTML = textoOriginal;
+                    btn.disabled = false;
+                    return;
+                }
+                const fotoLink = retorno.fotoLink || '';
+                const dataBR = dataEvento.split('-').reverse().join('/');
+
+                // mensagem para o WhatsApp da Fátima
+                const mensagemWhats = [
+                    'Olá Fátima! Acabei de fazer um pedido pelo site 🎂',
+                    '',
+                    '*Nome:* ' + nome,
+                    '*Massa:* ' + p.massa,
+                    '*Recheio 1ª Camada:* ' + p.recheio1,
+                    '*Recheio 2ª Camada:* ' + p.recheio2,
+                    '*Data do Evento:* ' + dataBR,
+                    '*Porções:* ' + p.tamanho,
+                    '*Decoração:* ' + p.decoracao,
+                    '*Valor estimado:* ' + p.valor,
+                    '*Mensagem:* ' + (mensagem || 'Nenhuma'),
+                    ...(fotoLink
+                        ? ['*Foto de referência:* ' + fotoLink]
+                        : (enviouFoto ? ['*Foto de referência:* vou enviar aqui na conversa'] : [])),
+                    '',
+                    'Aguardo a confirmação!'
+                ].join('\n');
+
+                // tela de confirmação
+                const resumo = $('#confirmacao-resumo');
+                resumo.replaceChildren(
+                    linhaConfirmacao('Nome', nome),
+                    linhaConfirmacao('WhatsApp', whatsapp),
+                    linhaConfirmacao('Massa', p.massa),
+                    linhaConfirmacao('1ª camada', p.recheio1),
+                    linhaConfirmacao('2ª camada', p.recheio2),
+                    linhaConfirmacao('Data do evento', dataBR),
+                    linhaConfirmacao('Tamanho', p.tamanho),
+                    linhaConfirmacao('Decoração', p.decoracao),
+                    linhaConfirmacao('Valor estimado', p.valor)
+                );
+                if (mensagem) {
+                    resumo.appendChild(linhaConfirmacao('Mensagem', mensagem));
+                }
+                if (fotoLink) {
+                    resumo.appendChild(linhaConfirmacao('Foto de referência', 'Enviada'));
+                }
+                if (DEBUG_FOTO) {
+                    const diagnostico = !retorno
+                        ? 'sem resposta legível do script (versão antiga ou erro de conexão)'
+                        : 'foto anexada no site: ' + (enviouFoto ? 'sim' : 'não') +
+                          ' | recebida pelo script: ' + (retorno.fotoRecebida === undefined ? 'script antigo' : (retorno.fotoRecebida ? 'sim' : 'não')) +
+                          ' | erro: ' + (retorno.fotoErro ? (retorno.fotoMotivo || 'sim') : 'não') +
+                          ' | versão: ' + (retorno.versao || 'antiga');
+                    resumo.appendChild(linhaConfirmacao('Diagnóstico da foto', diagnostico));
+                }
+                const urlWhats = 'https://wa.me/' + WHATSAPP_FATIMA + '?text=' + encodeURIComponent(mensagemWhats);
+                $('#btn-whatsapp-pedido').href = urlWhats;
+                $('#tela-confirmacao').style.display = 'flex';
+                document.body.classList.add('sem-rolagem');
+
+                // tenta abrir o WhatsApp sozinho; se o celular bloquear, o botão da tela resolve
+                setTimeout(function () {
+                    window.open(urlWhats, '_blank');
+                }, 1000);
+
+                // limpa os dados pessoais do formulário
+                $('#nome').value = '';
+                $('#whatsapp').value = '';
+                $('#data').value = '';
+                $('#mensagem').value = '';
+                campoMensagem.classList.remove('expandido');
+                removerFoto();
+            } catch (erro) {
+                console.log('Erro detalhado:', erro);
+                mostrarErroEnvio(null);
+            }
+
+            // restaura o botão
+            btn.innerHTML = textoOriginal;
+            btn.disabled = false;
+        });
+
+        // botão "fazer outro pedido"
+        $('#btn-novo-pedido').addEventListener('click', function () {
+            $('#tela-confirmacao').style.display = 'none';
+            document.body.classList.remove('sem-rolagem');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // =====================
+        // MENU LATERAL (HAMBÚRGUER)
+        // =====================
+        function abrirMenu() {
+            $('#menu-conteudo').classList.add('aberto');
+            $('#menu-overlay').classList.add('aberto');
+            document.body.classList.add('sem-rolagem');
+        }
+
+        function fecharMenu() {
+            $('#menu-conteudo').classList.remove('aberto');
+            $('#menu-overlay').classList.remove('aberto');
+            document.body.classList.remove('sem-rolagem');
+        }
+
+        $('#btn-menu').addEventListener('click', abrirMenu);
+        $('#menu-fechar').addEventListener('click', fecharMenu);
+        $('#menu-overlay').addEventListener('click', fecharMenu);
+        $$('#menu-conteudo a').forEach(function (link) {
+            link.addEventListener('click', fecharMenu);
+        });
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') {
+                fecharMenu();
+            }
+        });
+
+        // =====================
+        // ANIMAÇÕES AO ROLAR
+        // =====================
+        const observadorAnimar = new IntersectionObserver(function (entradas) {
+            entradas.forEach(function (entrada) {
+                if (entrada.isIntersecting) {
+                    entrada.target.classList.add('visivel');
+                }
+            });
+        }, { threshold: 0.1 });
+        $$('.animar').forEach(function (el) {
+            observadorAnimar.observe(el);
+        });
+
+        // =====================
+        // DESTAQUE DO MENU E DAS ETAPAS CONFORME A ROLAGEM
+        // =====================
+        const secaoParaMenu = { inicio: 'inicio', galeria: 'inicio', massas: 'massas', sobre: 'sobre', pedido: 'pedido' };
+
+        const observadorMenu = new IntersectionObserver(function (entradas) {
+            entradas.forEach(function (entrada) {
+                if (!entrada.isIntersecting) return;
+                const alvo = secaoParaMenu[entrada.target.id];
+                $$('[data-sec]').forEach(function (link) {
+                    link.classList.toggle('ativo', link.dataset.sec === alvo);
+                });
+            });
+        }, { rootMargin: '-45% 0px -50% 0px' });
+        Object.keys(secaoParaMenu).forEach(function (id) {
+            const el = document.getElementById(id);
+            if (el) observadorMenu.observe(el);
+        });
+
+        // etapa em destaque = a última seção que já passou de 40% da altura da tela
+        let rolagemAgendada = false;
+        function etapaPelaRolagem() {
+            rolagemAgendada = false;
+            const limite = window.innerHeight * 0.4;
+            let atual = ORDEM_PASSOS[0];
+            ORDEM_PASSOS.forEach(function (id) {
+                if (document.getElementById(id).getBoundingClientRect().top <= limite) {
+                    atual = id;
+                }
+            });
+            definirEtapaAtiva(atual);
+        }
+        window.addEventListener('scroll', function () {
+            if (!rolagemAgendada) {
+                rolagemAgendada = true;
+                requestAnimationFrame(etapaPelaRolagem);
+            }
+        }, { passive: true });
+        etapaPelaRolagem();
+
+        // =====================
+        // INICIALIZAÇÃO
+        // =====================
+        $('#ano-atual').textContent = new Date().getFullYear();
+        atualizarPedido();
+    </script>
 </body>
 
 </html>
