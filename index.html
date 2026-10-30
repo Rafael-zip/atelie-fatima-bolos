@@ -359,12 +359,12 @@
             <div class="formulario">
                 <div class="campo">
                     <label for="nome">Nome completo</label>
-                    <div class="campo-input"><svg class="ic" aria-hidden="true"><use href="#i-user"/></svg><input type="text" id="nome" placeholder="Seu nome" autocomplete="name" /></div>
+                    <div class="campo-input"><svg class="ic" aria-hidden="true"><use href="#i-user"/></svg><input type="text" id="nome" placeholder="Seu nome" autocomplete="name" maxlength="80" /></div>
                 </div>
 
                 <div class="campo">
                     <label for="whatsapp">WhatsApp</label>
-                    <div class="campo-input"><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg><input type="tel" id="whatsapp" placeholder="(00) 00000-0000" autocomplete="tel" inputmode="tel" /></div>
+                    <div class="campo-input"><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg><input type="tel" id="whatsapp" placeholder="(00) 00000-0000" autocomplete="tel" inputmode="tel" maxlength="20" /></div>
                 </div>
 
                 <div class="campo">
@@ -374,7 +374,7 @@
 
                 <div class="campo">
                     <label for="mensagem">Mensagem / Personalização</label>
-                    <div class="campo-input alinha-topo" id="campo-mensagem"><svg class="ic" aria-hidden="true"><use href="#i-sparkles"/></svg><textarea id="mensagem" rows="4" placeholder="Conte-nos como você imagina o bolo: tema, cores, nome, frase no topo..."></textarea></div>
+                    <div class="campo-input alinha-topo" id="campo-mensagem"><svg class="ic" aria-hidden="true"><use href="#i-sparkles"/></svg><textarea id="mensagem" maxlength="500" rows="4" placeholder="Conte-nos como você imagina o bolo: tema, cores, nome, frase no topo..."></textarea></div>
 
                     <div class="anexo" id="anexo">
                         <input type="file" id="foto" accept="image/*" hidden />
@@ -400,7 +400,16 @@
                     </dl>
                 </div>
 
+                <div class="campo-isca" aria-hidden="true">
+                    <label for="campo-extra">Deixe este campo em branco</label>
+                    <input type="text" id="campo-extra" name="campo_extra" tabindex="-1" autocomplete="off" />
+                </div>
+
                 <button type="button" class="botao botao-rosa botao-total" id="btn-enviar">Enviar solicitação <svg class="ic" aria-hidden="true"><use href="#i-send"/></svg></button>
+                <div class="erro-envio" id="erro-envio" role="alert" hidden>
+                    <p id="erro-envio-texto"></p>
+                    <a href="https://wa.me/5519994870852" class="botao botao-whats botao-total" target="_blank" rel="noopener">Chamar a Fátima no WhatsApp <svg class="ic ic-fill" aria-hidden="true"><use href="#i-whatsapp"/></svg></a>
+                </div>
             </div>
         </section>
 
@@ -479,6 +488,7 @@
             <h2 class="confirmacao-titulo" id="confirmacao-titulo">Pedido Enviado!</h2>
             <p class="confirmacao-texto">Obrigada pelo seu pedido! Em breve a Fátima entrará em contato para confirmar os detalhes.</p>
             <div class="confirmacao-resumo" id="confirmacao-resumo"></div>
+            <a href="#" class="botao botao-whats botao-total" id="btn-whatsapp-pedido" target="_blank" rel="noopener">Abrir WhatsApp com meu pedido <svg class="ic ic-fill" aria-hidden="true"><use href="#i-whatsapp"/></svg></a>
             <button type="button" class="botao botao-primario botao-total" id="btn-novo-pedido">Fazer outro pedido</button>
         </div>
     </div>
@@ -494,6 +504,7 @@
         // =====================
         const URL_PLANILHA = 'https://script.google.com/macros/s/AKfycbydy8rZFfhOJvWK3WBv8YDpAUr9hgkz_0uEy-d6M4p9zXqY5nViLQRX6cF8EUUMvl_4XQ/exec';
         const WHATSAPP_FATIMA = '5519994870852';
+        const paginaCarregadaEm = Date.now(); // usado para detectar robôs (preenchem rápido demais)
 
         const PRECOS = { 8: 120, 10: 145, 15: 160, 25: 210, 40: 300, 50: 380 };
         const TEXTO_PORCOES = {
@@ -859,6 +870,22 @@
             return linha;
         }
 
+        // mostra a caixa de erro do envio, com o botão para chamar a Fátima
+        function mostrarErroEnvio(retorno) {
+            const nomesCampos = { nome: 'nome', whatsapp: 'WhatsApp', dataEvento: 'data do evento', mensagem: 'mensagem' };
+            let texto = 'Não conseguimos confirmar o envio do seu pedido. Antes de tentar de novo, chame a Fátima no WhatsApp para conferir se ele chegou.';
+            if (retorno && retorno.erro === 'limite') {
+                texto = 'Recebemos muitos pedidos em pouco tempo. Aguarde alguns minutos e tente de novo, ou fale direto com a Fátima.';
+            } else if (retorno && retorno.erro === 'dados_invalidos') {
+                texto = 'Confira o campo "' + (nomesCampos[retorno.campo] || retorno.campo) + '" e tente enviar novamente.';
+            } else if (retorno && retorno.erro === 'ocupado') {
+                texto = 'O sistema está ocupado agora. Tente novamente em instantes.';
+            }
+            $('#erro-envio-texto').textContent = texto;
+            $('#erro-envio').hidden = false;
+            $('#erro-envio').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
         $('#btn-enviar').addEventListener('click', async function () {
             const btn = $('#btn-enviar');
             const nome = $('#nome').value.trim();
@@ -866,10 +893,18 @@
             const dataEvento = $('#data').value;
             const mensagem = $('#mensagem').value.trim();
             const p = lerPedido();
+            $('#erro-envio').hidden = true;
 
             // campos obrigatórios
             if (!nome || !whatsapp || !dataEvento) {
                 alert('Por favor preencha todos os campos obrigatórios!');
+                return;
+            }
+
+            // WhatsApp com DDD (10 a 13 números, contando o código do país)
+            const digitosWhats = whatsapp.replace(/\D/g, '');
+            if (digitosWhats.length < 10 || digitosWhats.length > 13) {
+                alert('Informe um WhatsApp válido, com DDD. Exemplo: (19) 99999-9999');
                 return;
             }
 
@@ -899,7 +934,9 @@
                     porcoes: p.porcoes,
                     decoracao: p.decoracao,
                     valorEstimado: p.valor,
-                    mensagem: mensagem
+                    mensagem: mensagem,
+                    website: $('#campo-extra').value,
+                    tempoPreenchimento: Date.now() - paginaCarregadaEm
                 };
                 // foto de referência (só vai se a pessoa anexou uma)
                 if (FOTO_ATIVA && fotoAnexada) {
@@ -916,12 +953,20 @@
 
                 // o Apps Script devolve o link da foto salva no Drive (se houve foto)
                 const enviouFoto = !!(FOTO_ATIVA && fotoAnexada);
-                let fotoLink = '';
                 let retorno = null;
                 try {
                     retorno = await enviado.json();
-                    fotoLink = retorno.fotoLink || '';
-                } catch (e) { /* o pedido foi enviado; só não deu para ler a resposta */ }
+                } catch (e) { retorno = null; }
+
+                // só mostra "Pedido Enviado!" quando o script confirma que gravou
+                if (!retorno || retorno.status !== 'ok') {
+                    mostrarErroEnvio(retorno);
+                    btn.innerHTML = textoOriginal;
+                    btn.disabled = false;
+                    return;
+                }
+                const fotoLink = retorno.fotoLink || '';
+                const dataBR = dataEvento.split('-').reverse().join('/');
 
                 // mensagem para o WhatsApp da Fátima
                 const mensagemWhats = [
@@ -931,7 +976,7 @@
                     '*Massa:* ' + p.massa,
                     '*Recheio 1ª Camada:* ' + p.recheio1,
                     '*Recheio 2ª Camada:* ' + p.recheio2,
-                    '*Data do Evento:* ' + dataEvento,
+                    '*Data do Evento:* ' + dataBR,
                     '*Porções:* ' + p.tamanho,
                     '*Decoração:* ' + p.decoracao,
                     '*Valor estimado:* ' + p.valor,
@@ -951,7 +996,7 @@
                     linhaConfirmacao('Massa', p.massa),
                     linhaConfirmacao('1ª camada', p.recheio1),
                     linhaConfirmacao('2ª camada', p.recheio2),
-                    linhaConfirmacao('Data do evento', dataEvento),
+                    linhaConfirmacao('Data do evento', dataBR),
                     linhaConfirmacao('Tamanho', p.tamanho),
                     linhaConfirmacao('Decoração', p.decoracao),
                     linhaConfirmacao('Valor estimado', p.valor)
@@ -971,12 +1016,14 @@
                           ' | versão: ' + (retorno.versao || 'antiga');
                     resumo.appendChild(linhaConfirmacao('Diagnóstico da foto', diagnostico));
                 }
+                const urlWhats = 'https://wa.me/' + WHATSAPP_FATIMA + '?text=' + encodeURIComponent(mensagemWhats);
+                $('#btn-whatsapp-pedido').href = urlWhats;
                 $('#tela-confirmacao').style.display = 'flex';
                 document.body.classList.add('sem-rolagem');
 
-                // abre o WhatsApp automaticamente após 1 segundo
+                // tenta abrir o WhatsApp sozinho; se o celular bloquear, o botão da tela resolve
                 setTimeout(function () {
-                    window.open('https://wa.me/' + WHATSAPP_FATIMA + '?text=' + encodeURIComponent(mensagemWhats), '_blank');
+                    window.open(urlWhats, '_blank');
                 }, 1000);
 
                 // limpa os dados pessoais do formulário
@@ -988,7 +1035,7 @@
                 removerFoto();
             } catch (erro) {
                 console.log('Erro detalhado:', erro);
-                alert('Erro: ' + erro.message);
+                mostrarErroEnvio(null);
             }
 
             // restaura o botão

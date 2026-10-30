@@ -1742,3 +1742,33 @@ body.sem-rolagem {
         font-size: 2.75rem;
     }
 }
+
+/* ---- proteção do formulário e erro de envio ---- */
+.campo-isca {
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+.erro-envio {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 14px;
+    padding: 14px 16px;
+    border: 1px solid var(--rosa-claro);
+    border-radius: 14px;
+    background-color: rgba(184, 64, 95, 0.12);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.erro-envio[hidden] {
+    display: none;
+}
+
+.confirmacao-caixa .botao-whats {
+    margin-bottom: 10px;
+}
